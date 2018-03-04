@@ -260,4 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 
-/ExpertSystem/app/migrations/
+/Expert system of volcanism/app/migrations/
