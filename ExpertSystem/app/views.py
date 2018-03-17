@@ -6,6 +6,8 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
+from django.views import View
+from app.forms import SignAddForm
 
 def home(request):
     """Renders the home page."""
@@ -44,3 +46,15 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+
+class Addsign(View):
+    classform = SignAddForm
+    template_name='app/addsign.html'
+    title='Добавление учётной записи'
+    def get(self,request):
+        form = self.classform()
+        return render(request,self.template_name,{'title':self.title,'form':form})
+    def post(self,request):
+        form = self.classform(request.POST)
+        new_sign = form.save()
+        return HttpResponseRedirect('/addsign')
