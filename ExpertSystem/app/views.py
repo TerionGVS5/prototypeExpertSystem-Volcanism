@@ -8,6 +8,7 @@ from django.template import RequestContext
 from datetime import datetime
 from django.views import View
 from app.forms import SignAddForm
+from django.http import HttpResponseRedirect
 
 def home(request):
     """Renders the home page."""
