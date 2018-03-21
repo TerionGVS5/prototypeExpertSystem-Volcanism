@@ -22,6 +22,7 @@ class Sign(models.Model):
     value = models.BooleanField()
     volcano = models.ForeignKey('Volcano', on_delete=models.CASCADE)
     groupsign = models.ForeignKey('GroupSign', on_delete=models.CASCADE)
+    number = models.IntegerField()
     def __str__(self):
         return self.name
 
