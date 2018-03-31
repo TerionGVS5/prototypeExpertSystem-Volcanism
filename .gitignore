@@ -263,3 +263,5 @@ __pycache__/
 /ExpertSystem/app/migrations/
 
 /ExpertSystem/env/
+
+/ExpertSystem/ExpertSystem.pyproj
