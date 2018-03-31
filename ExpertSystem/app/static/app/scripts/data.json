@@ -1,0 +1,60 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 56.26, 160.34 ]
+      },
+      "properties": {
+        "hintContent": "Харчинский, Заречный"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 55.58, 160.36 ]
+      },
+      "properties": {
+        "hintContent": "Безымянный"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 2,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 55.56, 160.45 ]
+      },
+      "properties": {
+        "hintContent": "Удины сопки"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 3,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 55.56, 160.45 ]
+      },
+      "properties": {
+        "hintContent": "Удины сопки"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 4,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 54.03, 159.27 ]
+      },
+      "properties": {
+        "hintContent": "Карымский"
+      }
+    }
+  ]
+}

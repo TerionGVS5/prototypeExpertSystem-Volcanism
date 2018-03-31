@@ -19,6 +19,19 @@ def home(request):
         }
     )
 
+def maps(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/maps.html',
+        {
+            'title':'Maps',
+            'message':'Your contact page.',
+            'year':datetime.now().year,
+        }
+    )
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
