@@ -2,80 +2,84 @@
 {% load staticfiles %}
 
 {% block scripts %}
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
-    <script src="{% static 'app/scripts/maps.js' %}"></script>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+<script src="{% static 'app/scripts/maps.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-	<style>
-        #map {
-            /*width: 600px;*/ height: 800px; /*padding: 0; margin: 0; */
-            /*transform: rotate(90deg);*/
-        }
+<style>
+    #map {
+        /*width: 600px;*/ height: 800px; /*padding: 0; margin: 0; */
+        /*transform: rotate(90deg);*/
+    }
 
-        .yellow {
-            background: #ffff00;
-        }
+    .yellow {
+        background: #ffff00;
+    }
 
-        .green {
-            background: #78e780;
-        }
+    .green {
+        background: #78e780;
+    }
 
-        .margin {
-            margin: 5px;
-        }
+    .margin {
+        margin: 5px;
+    }
 
-        div.list-volcanoes {
-            height: 800px;
-            overflow: scroll;
-        }
+    div.list-volcanoes {
+        height: 800px;
+        overflow: scroll;
+    }
 
-    </style>
-    
-    <div class="main">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h1 class="text-center page-header">Экспертная система (Вулканизм)</h1>
-                </div>
-            </div>
-            <div class="clearfix"></div> 
-            <div class="row">
-                <div id="map" class="col-xs-6"></div>
-                <div class="list-volcanoes col-xs-6">
-                    <h2>Список вулканов</h2>
-                    <ul class="list-group dropdown">
-                        <li id="0" class="green margin list-group-item">Харчинский, Заречный</li>
-                        <li id="1" class="green margin list-group-item">Безымянный</li>
-                        <li id="2" class="green margin list-group-item">Удины сопки</li>
-                        <li id="3" class="green margin list-group-item">Карымский</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                    </ul>
-                </div>
-                <div class="clearfix"></div> 
-            </div>
-            <div class="row">
-                <div class="col-xs-10"></div>
-                <div class="col-xs-2">
-                    <button type="button" class="btn btn-success">Продолжить</button>
-                </div>
+</style>
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="text-center page-header">Экспертная система (Вулканизм)</h1>
             </div>
         </div>
-    
+        <div class="clearfix"></div>
+        <div class="row">
+            <div id="map" class="col-xs-6"></div>
+            <div class="list-volcanoes col-xs-6">
+                <h2>Список вулканов</h2>
+                <ul class="list-group dropdown">
+                    <li id="0" class="green margin list-group-item">Харчинский, Заречный</li>
+                    <li id="1" class="green margin list-group-item">Безымянный</li>
+                    <li id="2" class="green margin list-group-item">Удины сопки</li>
+                    <li id="3" class="green margin list-group-item">Карымский</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                    <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
+                </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-10"></div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-success">Продолжить</button>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var json = "{{vulcanos}}".replace(/&quot;/g,"\"");
+    console.log(json);
+</script>
 {% endblock %}

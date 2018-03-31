@@ -10,6 +10,9 @@ from datetime import datetime
 from django.views import View
 from app.forms import SignAddForm
 from django.http import HttpResponseRedirect
+from app.models import Volcano
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 def home(request):
     """Renders the home page."""
@@ -26,11 +29,14 @@ def home(request):
 def maps(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
+    vulcanos = Volcano.objects.all().values_list('pk','name', 'latitude', 'longitude')
+    vulcanos_json = json.dumps(list(vulcanos), cls=DjangoJSONEncoder)
     return render(
         request,
         'app/maps.html',
         {
             'title':'Maps',
+            'vulcanos':vulcanos_json,
             'message':'Your contact page.',
             'year':datetime.now().year,
         }

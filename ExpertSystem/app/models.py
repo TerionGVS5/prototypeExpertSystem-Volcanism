@@ -19,10 +19,10 @@ class GroupSign(models.Model):
 
 class Sign(models.Model):
     name = models.CharField(max_length=150)
-    number = models.FloatField()
+    number = models.IntegerField()
     groupsign = models.ForeignKey('GroupSign',on_delete = models.CASCADE)
     def __str__(self):
-        return self.name
+        return self.name+' '+str(self.number)
 
 class Value(models.Model):
     value = models.BooleanField()
