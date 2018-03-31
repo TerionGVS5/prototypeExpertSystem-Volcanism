@@ -208,3 +208,24 @@ System.InvalidOperationException: Cannot obtain search paths ---> System.Invalid
    в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    в Microsoft.PythonTools.Analysis.PyLibAnalyzer.<Run>d__33.MoveNext()
+
+2018-03-31T14:28:54: Start analysis
+2018-03-31T14:28:56: [ERROR] Analysis failed
+System.InvalidOperationException: Cannot obtain search paths ---> System.InvalidOperationException: Cannot obtain list of paths
+Не удается найти указанный файл
+   в Microsoft.PythonTools.Interpreter.PythonTypeDatabase.<GetUncachedDatabaseSearchPathsAsync>d__58.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.ValidateEnd(Task task)
+   в Microsoft.PythonTools.Analysis.PyLibAnalyzer.<Prepare>d__46.MoveNext()
+   --- Конец трассировки внутреннего стека исключений ---
+   в Microsoft.PythonTools.Analysis.PyLibAnalyzer.<Prepare>d__46.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в Microsoft.PythonTools.Analysis.PyLibAnalyzer.<RunWorker>d__34.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в Microsoft.PythonTools.Analysis.PyLibAnalyzer.<Run>d__33.MoveNext()
