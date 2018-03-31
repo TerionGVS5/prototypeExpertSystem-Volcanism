@@ -58,6 +58,9 @@
   <ItemGroup>
     <Content Include="app\templates\app\addvalue.html" />
     <Content Include="app\templates\app\addsign.html" />
+	<Content Include="app\static\app\scripts\data.json" />
+    <Content Include="app\static\app\scripts\maps.js" />
+    <Content Include="app\templates\app\maps.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
