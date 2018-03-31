@@ -39,10 +39,10 @@
       "id": 3,
       "geometry": {
         "type": "Point",
-        "coordinates": [ 55.56, 160.45 ]
+        "coordinates": [ 54.03, 159.27 ]
       },
       "properties": {
-        "hintContent": "Удины сопки"
+        "hintContent": "Карымский"
       }
     },
     {
@@ -50,10 +50,10 @@
       "id": 4,
       "geometry": {
         "type": "Point",
-        "coordinates": [ 54.03, 159.27 ]
+        "coordinates": [ 54.00, 159.25 ]
       },
       "properties": {
-        "hintContent": "Карымский"
+        "hintContent": "Ареальное поле Карымско-Семичинской группы"
       }
     }
   ]
