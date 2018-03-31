@@ -3,6 +3,7 @@ Definition of forms.
 """
 
 from django.forms import ModelForm
+from app.models import Value
 from django import forms
 from app.models import Sign
 from django.contrib.auth.forms import AuthenticationForm
@@ -22,4 +23,10 @@ class BootstrapAuthenticationForm(AuthenticationForm):
 class SignAddForm(ModelForm):
     class Meta:
         model = Sign
-        fields = ['name', 'value', 'volcano', 'groupsign']
+        fields = ['name','number', 'groupsign']
+
+class ValueAddForm(ModelForm):
+    class Meta:
+        model = Value
+        fields = ['value','volcano','sign']
+
