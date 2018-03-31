@@ -1,0 +1,44 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": 0,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 56.26, 160.34 ]
+      },
+      "properties": {
+
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 1,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 55.58, 160.36 ]
+      },
+      "properties": {
+        "iconCaption": "Безымянный",
+        //"balloonContent": "Безымянный",
+        "clusterCaption": "Еще одна метка",
+        "hintContent": "Текст подсказки"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": 49,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [ 55.56, 160.45 ]
+      },
+      "properties": {
+        "iconCaption": "Удины сопки",
+        //"balloonContent": "Удины сопки",
+        "clusterCaption": "Еще одна метка",
+        "hintContent": "Текст подсказки"
+      }
+    }
+  ]
+}
