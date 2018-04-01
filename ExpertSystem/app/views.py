@@ -3,14 +3,13 @@ Definition of views.
 """
 
 from django.shortcuts import render
-from app.forms import ValueAddForm
+from app.forms import *
 from django.http import HttpRequest
 from django.template import RequestContext
 from datetime import datetime
 from django.views import View
-from app.forms import SignAddForm
 from django.http import HttpResponseRedirect
-from app.models import Volcano
+from app.models import *
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
@@ -91,3 +90,27 @@ class Addvalue(View):
         form = self.classform(request.POST)
         new_sign = form.save()
         return HttpResponseRedirect('/addvalue')
+
+class Addgroupvolcano(View):
+    classform = GroupVolcanoAddForm
+    template_name='app/addgroupvolcano.html'
+    title='Добавление груп вулканов'
+    def get(self,request):
+        form = self.classform()
+        return render(request,self.template_name,{'title':self.title,'form':form})
+    def post(self,request):
+        form = self.classform(request.POST)
+        new_sign = form.save()
+        return HttpResponseRedirect('/addgroupvolcano')
+
+class Addvolcano(View):
+    classform = VolcanoAddForm
+    template_name='app/addvolcano.html'
+    title='Добавление вулканов'
+    def get(self,request):
+        form = self.classform()
+        return render(request,self.template_name,{'title':self.title,'form':form})
+    def post(self,request):
+        form = self.classform(request.POST)
+        new_sign = form.save()
+        return HttpResponseRedirect('/addvolcano')

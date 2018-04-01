@@ -3,6 +3,8 @@ Definition of forms.
 """
 
 from django.forms import ModelForm
+from app.models import Volcano
+from app.models import GroupVolcano
 from app.models import Value
 from django import forms
 from app.models import Sign
@@ -29,4 +31,15 @@ class ValueAddForm(ModelForm):
     class Meta:
         model = Value
         fields = ['value','volcano','sign']
+
+class GroupVolcanoAddForm(ModelForm):
+    class Meta:
+        model = GroupVolcano
+        fields = ['name']
+
+class VolcanoAddForm(ModelForm):
+    class Meta:
+        model = Volcano
+        fields = ['name','groupvolcano','latitude','longitude','activ']
+
 

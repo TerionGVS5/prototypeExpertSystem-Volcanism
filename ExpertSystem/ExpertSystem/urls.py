@@ -3,6 +3,8 @@ Definition of urls for ExpertSystem.
 """
 
 from datetime import datetime
+from app.views import Addvolcano
+from app.views import Addgroupvolcano
 from django.conf.urls import url
 import django.contrib.auth.views
 
@@ -22,6 +24,8 @@ urlpatterns = [
     url(r'^about', app.views.about, name='about'),
     url(r'^addsign', app.views.Addsign.as_view(), name='addsign'),
     url(r'^addvalue',app.views.Addvalue.as_view(), name='addvalue'),
+    url(r'^addgroupvolcano',app.views.Addgroupvolcano.as_view(), name='addgroupvolcano'),
+    url(r'^addvolcano',app.views.Addvolcano.as_view(), name='addvolcano'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {
