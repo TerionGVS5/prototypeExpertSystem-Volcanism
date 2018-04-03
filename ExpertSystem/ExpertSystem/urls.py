@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^addvalue',app.views.Addvalue.as_view(), name='addvalue'),
     url(r'^addgroupvolcano',app.views.Addgroupvolcano.as_view(), name='addgroupvolcano'),
     url(r'^addvolcano',app.views.Addvolcano.as_view(), name='addvolcano'),
+    url(r'^selectvolcano/$',app.views.SelectVolcano.as_view(), name='selectvolcano'),
+    url(r'^updatevolcano/(?P<pk>\d+)/$',app.views.VolcanoUpdate.as_view(), name='updatevolcano'),
     url(r'^login/$',
         django.contrib.auth.views.login,
         {

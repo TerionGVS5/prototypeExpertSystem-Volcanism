@@ -56,6 +56,8 @@
     <Folder Include="ExpertSystem\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\templates\app\selectvolcano.html" />
+    <Content Include="app\templates\app\volcano_update_form.html" />
     <Content Include="app\templates\app\addgroupvolcano.html" />
     <Content Include="app\templates\app\addvolcano.html" />
     <Content Include="app\templates\app\addvalue.html" />
