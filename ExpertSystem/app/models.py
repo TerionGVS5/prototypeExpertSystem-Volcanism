@@ -12,7 +12,7 @@ class Volcano(models.Model):
     activ = models.BooleanField(default = False)
     groupvolcano = models.ForeignKey('GroupVolcano',null = True,on_delete = models.CASCADE)
     def __str__(self):
-        return self.name
+        return self.name +' '+  str(self.pk)
 
 class GroupVolcano(models.Model):
     name = models.CharField(max_length=150)
