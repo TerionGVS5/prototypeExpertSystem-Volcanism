@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from app.models import *
 import json
 from django.core.serializers.json import DjangoJSONEncoder
+from django.views.generic.edit import UpdateView
 
 def home(request):
     """Renders the home page."""
@@ -114,3 +115,22 @@ class Addvolcano(View):
         form = self.classform(request.POST)
         new_sign = form.save()
         return HttpResponseRedirect('/addvolcano')
+
+class VolcanoUpdate(UpdateView):
+    model = Volcano
+    fields = ['name', 'latitude', 'longitude','activ', 'groupvolcano']
+    template_name_suffix = '_update_form'
+    success_url = '/'
+
+class SelectVolcano(View):
+    classform = VolcanoSelectForm
+    template_name='app/selectvolcano.html'
+    title='Выбор вулканов'
+    def get(self,request):
+        form = self.classform()
+        return render(request,self.template_name,{'title':self.title,'form':form})
+    def post(self,request):
+        form = self.classform(request.POST)
+        if form.is_valid():
+            key = form.cleaned_data['volcano'].pk
+            return HttpResponseRedirect('/updatevolcano/{}/'.format(key))

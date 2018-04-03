@@ -42,4 +42,7 @@ class VolcanoAddForm(ModelForm):
         model = Volcano
         fields = ['name','groupvolcano','latitude','longitude','activ']
 
+class VolcanoSelectForm(forms.Form):
+    volcano = forms.ModelChoiceField(queryset=Volcano.objects.all(), empty_label="(Nothing)")
+
 
