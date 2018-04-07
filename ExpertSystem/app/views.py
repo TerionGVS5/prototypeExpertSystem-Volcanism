@@ -13,6 +13,10 @@ from app.models import *
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.views.generic.edit import UpdateView
+from openpyxl import load_workbook
+from django.core.exceptions import ObjectDoesNotExist
+import os
+from django.http import HttpResponse
 
 def home(request):
     """Renders the home page."""
@@ -134,3 +138,27 @@ class SelectVolcano(View):
         if form.is_valid():
             key = form.cleaned_data['volcano'].pk
             return HttpResponseRedirect('/updatevolcano/{}/'.format(key))
+
+def fillDB(request):
+    data_values = Value.objects.all().count()
+    if data_values !=0:
+        return HttpResponse("В базе уже что-то есть. Нужно очистить сначала")
+    else:
+        path = os.path.abspath("data.xlsx")
+        wb = load_workbook(path)
+        ws = wb.active
+        row_num = 0
+        for row in ws.iter_rows():
+            row_num+=1
+            column_num=0
+            for cell in row:
+                column_num+=1
+                try:
+                    volcan_now = Volcano.objects.get(pk=row_num)
+                    sign_now = Sign.objects.get(pk=column_num)
+                except ObjectDoesNotExist:
+                    continue
+                value_now = Value(value = cell.value,volcano = volcan_now, sign = sign_now)
+                value_now.save()
+
+        return HttpResponse("Вроде заполнилось всё")

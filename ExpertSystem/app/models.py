@@ -36,6 +36,6 @@ class Value(models.Model):
     volcano = models.ForeignKey('Volcano', on_delete=models.CASCADE)
     sign = models.ForeignKey('Sign', on_delete=models.CASCADE)
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 

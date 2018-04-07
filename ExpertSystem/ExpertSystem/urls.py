@@ -20,6 +20,7 @@ urlpatterns = [
     # Examples:
     url(r'^$', app.views.home, name='home'),
     url(r'^maps$', app.views.maps, name='Maps'),
+    url(r'^filldb$', app.views.fillDB, name='filldb'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^about', app.views.about, name='about'),
     url(r'^addsign', app.views.Addsign.as_view(), name='addsign'),
