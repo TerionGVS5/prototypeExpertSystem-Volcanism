@@ -9,6 +9,15 @@ class Volcano(models.Model):
     name = models.CharField(max_length=50)
     latitude = models.FloatField()
     longitude = models.FloatField()
+    activ = models.BooleanField(default = False)
+    groupvolcano = models.ForeignKey('GroupVolcano',null = True,on_delete = models.CASCADE)
+    description = models.TextField(max_length=1000, blank = True)
+    image = models.ImageField(null = True,upload_to='app/static/app/images/')
+    def __str__(self):
+        return self.name +' '+  str(self.pk)
+
+class GroupVolcano(models.Model):
+    name = models.CharField(max_length=150)
     def __str__(self):
         return self.name
 
@@ -29,6 +38,6 @@ class Value(models.Model):
     volcano = models.ForeignKey('Volcano', on_delete=models.CASCADE)
     sign = models.ForeignKey('Sign', on_delete=models.CASCADE)
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 

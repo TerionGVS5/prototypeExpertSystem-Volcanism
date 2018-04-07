@@ -1,0 +1,11 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<h2>{{ title }}.</h2>
+<form action="/addvolcano/" method="post">
+    {% csrf_token %}
+    {{ form }}
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}
