@@ -1,3 +1,28 @@
+function selectVolcanoe(objectId) { 
+    var strId = '#' + objectId; //строка с id элемента в списке вулканов
+    //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
+    if (selectedVolcanoes.indexOf(objectId) == -1) {
+        selectedVolcanoes.push(objectId); // Добавление id вулкана в массив
+        $(strId).removeClass('green'); // Удаление класса элемента списка
+        $(strId).addClass('yellow'); // Добавление класса элемента списка
+        // Метод setObjectOptions позволяет задавать опции объекта "на лету".
+        objectManager.objects.setObjectOptions(objectId, {
+            preset: 'islands#yellowDotIcon'
+        });
+        console.log(selectedVolcanoes);
+        // иначе удаляем вершину и возвращаем исходный цвет
+    } else {
+        selectedVolcanoes.splice(selectedVolcanoes.indexOf(objectId), 1); // Удаление id вулкана из массива
+        $(strId).removeClass('yellow');
+        $(strId).addClass('green');
+        objectManager.objects.setObjectOptions(objectId, {
+            preset: 'islands#greenDotIcon'
+        });
+        console.log(selectedVolcanoes);
+    }
+
+} // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
+
 var myMap;
 var selectedVolcanoes = new Array();
 ymaps.ready(init);
@@ -71,29 +96,5 @@ function init() {
             }
         });
 
-        function selectVolcanoe(objectId) { // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
-            var strId = '#' + objectId; //строка с id элемента в списке вулканов
-            //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
-            if (selectedVolcanoes.indexOf(objectId) == -1) {
-                selectedVolcanoes.push(objectId); // Добавление id вулкана в массив
-                $(strId).removeClass('green'); // Удаление класса элемента списка
-                $(strId).addClass('yellow'); // Добавление класса элемента списка
-                // Метод setObjectOptions позволяет задавать опции объекта "на лету".
-                objectManager.objects.setObjectOptions(objectId, {
-                    preset: 'islands#yellowDotIcon'
-                });
-                console.log(selectedVolcanoes);
-            // иначе удаляем вершину и возвращаем исходный цвет
-            } else {
-                selectedVolcanoes.splice(selectedVolcanoes.indexOf(objectId), 1); // Удаление id вулкана из массива
-                $(strId).removeClass('yellow');
-                $(strId).addClass('green');
-                objectManager.objects.setObjectOptions(objectId, {
-                    preset: 'islands#greenDotIcon'
-                });
-                console.log(selectedVolcanoes);
-            }
-            
-        }
 
 }

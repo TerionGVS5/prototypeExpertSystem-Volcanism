@@ -29,14 +29,17 @@ def home(request):
 def maps(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
-    vulcanos = Volcano.objects.all().values_list('pk','name', 'latitude', 'longitude')
-    vulcanos_json = json.dumps(list(vulcanos), cls=DjangoJSONEncoder)
+    vulcanoseFullInfo = Volcano.objects.all().values_list('pk','name', 'latitude', 'longitude')
+    vulcanoseName = Volcano.objects.all().values_list('pk', 'name')
+    vulcanoseStrFullInfo = json.dumps(list(vulcanoseFullInfo), cls=DjangoJSONEncoder)
+    vulcanoseStrName = json.dumps(list(vulcanoseName), cls=DjangoJSONEncoder)
     return render(
         request,
         'app/maps.html',
         {
             'title':'Maps',
-            'vulcanos':vulcanos_json,
+            'vulcanoseArrFullInfo':vulcanoseStrFullInfo,
+            'vulcanoseStrName': vulcanoseStrName,
             'message':'Your contact page.',
             'year':datetime.now().year,
         }

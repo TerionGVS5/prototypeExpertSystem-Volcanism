@@ -3,83 +3,100 @@
 
 {% block scripts %}
     <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-    <script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    <!--<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>-->
     <script src="{% static 'app/scripts/maps.js' %}"></script>
+    <script src="{% static 'app/scripts/processDataVolcanoesDB.js' %}"></script>
 {% endblock %}
 
 {% block content %}
+    <script type="text/javascript">
+        var vulcanoseStrFullInfo = "{{vulcanoseStrFullInfo}}".replace(/&quot;/g,"\"");
+        var vulcanoseStrName = "{{vulcanoseStrName}}".replace(/&quot;/g,"\"");
+    </script>
 
-	<style>
-        #map {
-            /*width: 600px;*/ height: 800px; /*padding: 0; margin: 0; */
-            /*transform: rotate(90deg);*/
-        }
+<!--Модальное окно информации о вулкане-->
+    <div id="infoVolcano" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content overflow-scroll height">
+          <!-- Заголовок модального окна -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 id="modal-header-text" class="modal-title"><!--Текст задается динамически--></h4>
+          </div>
+          <!-- Основное содержимое модального окна -->
+          <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 id="modal-name-volcano" class="text-center page-header margin-top-off"><!--Текст задается динамически--></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <img src="" id="img-volcano" class="full-size" alt="Фотография вулкана"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4 class="text-center">Основные данные</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6"><p class="text-right">Активность:</p></div>
+                    <div class="col-xs-6"><p id="activity-val" class="text-left"><!--Текст задается динамически--></p></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6"><p class="text-right">Широта:</p></div>
+                    <div class="col-xs-6"><p id="latitude-val" class="text-left"><!--Текст задается динамически--></p></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6"><p class="text-right">Долгота:</p></div>
+                    <div class="col-xs-6"><p id="longitude-val" class="text-left"><!--Текст задается динамически--></p></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4 class="text-center">Описание</h4>
+                        <p id="description-volcano"><!--Текст задается динамически--></p>
+                    </div>
+                </div>
+            </div>
 
-        .yellow {
-            background: #ffff00;
-        }
+          <!-- Футер модального окна -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            <!--<button type="button" class="btn btn-primary">Сохранить изменения</button>-->
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
 
-        .green {
-            background: #78e780;
-        }
-
-        .margin {
-            margin: 5px;
-        }
-
-        div.list-volcanoes {
-            height: 800px;
-            overflow: scroll;
-        }
-
-    </style>
-    
-    <div class="main">
+    <div class="main" style="height: 300px;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1 class="text-center page-header">Экспертная система (Вулканизм)</h1>
+                    <h2 id="test" class="text-center page-header">Экспертная система (Вулканизм)</h2>
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="row">
-                <div id="map" class="col-xs-6"></div>
-                <div class="list-volcanoes col-xs-6">
-                    <h2>Список вулканов</h2>
-                    <ul class="list-group dropdown">
-                        <li id="0" class="green margin list-group-item">Харчинский, Заречный</li>
-                        <li id="1" class="green margin list-group-item">Безымянный</li>
-                        <li id="2" class="green margin list-group-item">Удины сопки</li>
-                        <li id="3" class="green margin list-group-item">Карымский</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                        <li id="4" class="green margin list-group-item">Ареальное поле Карымско-Семичинской группы</li>
-                    </ul>
-                </div>
-                <div class="clearfix"></div>
+                <div id="map" class="col-xs-6 height550px"></div>
+                <div id="list-volcanoes" class="height550px overflow-scroll col-xs-6"></div> <!--Заполнение контейнера происходит js файлом-->
+                <div class="clearfix" style=""></div>
             </div>
-            <div class="row">
+            <div class="col-xs-12" style="height:10px"></div>
+            <div class="row row-flex">
                 <div class="col-xs-10"></div>
                 <div class="col-xs-2">
                     <button type="button" class="btn btn-success">Продолжить</button>
                 </div>
+                <div class="clearfix" style=""></div>
             </div>
         </div>
+    </div>
+    <div class="clearfix" style=""></div>
 
-<script type="text/javascript">
-    var json = "{{vulcanos}}".replace(/&quot;/g,"\"");
-    console.log(json);
-</script>    
 {% endblock %}
