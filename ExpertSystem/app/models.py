@@ -11,6 +11,8 @@ class Volcano(models.Model):
     longitude = models.FloatField()
     activ = models.BooleanField(default = False)
     groupvolcano = models.ForeignKey('GroupVolcano',null = True,on_delete = models.CASCADE)
+    description = models.TextField(max_length=500, blank = True)
+    image = models.ImageField(null = True)
     def __str__(self):
         return self.name +' '+  str(self.pk)
 

@@ -212,3 +212,7 @@ System.InvalidOperationException: Cannot obtain search paths ---> System.Invalid
 2018-04-07T11:49:14: Start analysis
 2018-04-07T11:49:15: IncludeModulesFromModulePath = win32com
 2018-04-07T11:49:20: Deleting 0 files
+
+2018-04-07T14:27:42: Start analysis
+2018-04-07T14:27:42: IncludeModulesFromModulePath = win32com
+2018-04-07T14:27:47: Deleting 0 files

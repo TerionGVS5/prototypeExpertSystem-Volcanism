@@ -122,7 +122,7 @@ class Addvolcano(View):
 
 class VolcanoUpdate(UpdateView):
     model = Volcano
-    fields = ['name', 'latitude', 'longitude','activ', 'groupvolcano']
+    fields = ['name', 'latitude', 'longitude','activ', 'groupvolcano','description','image']
     template_name_suffix = '_update_form'
     success_url = '/'
 
