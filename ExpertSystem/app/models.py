@@ -12,7 +12,7 @@ class Volcano(models.Model):
     activ = models.BooleanField(default = False)
     groupvolcano = models.ForeignKey('GroupVolcano',null = True,on_delete = models.CASCADE)
     description = models.TextField(max_length=1000, blank = True)
-    image = models.ImageField(null = True)
+    image = models.ImageField(null = True,upload_to='app/static/app/images/')
     def __str__(self):
         return self.name +' '+  str(self.pk)
 
