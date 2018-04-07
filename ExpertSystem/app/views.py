@@ -43,7 +43,7 @@ def maps(request):
         'app/maps.html',
         {
             'title':'Maps',
-            'vulcanoseArrFullInfo':vulcanoseStrFullInfo,
+            'vulcanoseStrFullInfo':vulcanoseStrFullInfo,
             'vulcanoseStrName': vulcanoseStrName,
             'message':'Your contact page.',
             'year':datetime.now().year,

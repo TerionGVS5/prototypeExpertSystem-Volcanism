@@ -73,12 +73,15 @@ function init() {
         // обратимся к дочерним коллекциям ObjectManager.
         objectManager.objects.options.set('preset', 'islands#greenDotIcon');
         myMap.geoObjects.add(objectManager);
+
+        objectManager.add(createJsonForYandexMap()); // Добавление данных из JSON-строки
+
         // Загрузка данных о метках из JSON-файла
-        $.ajax({
+        /*$.ajax({
             url: "http://localhost:8000/static/app/scripts/data.json"
         }).done(function (data) {
             objectManager.add(data);
-        });
+        });*/
     
         function onObjectEvent(e) {
             var objectId = e.get('objectId');

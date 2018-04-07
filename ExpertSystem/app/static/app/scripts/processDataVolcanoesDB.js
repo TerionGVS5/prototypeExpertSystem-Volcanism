@@ -1,14 +1,12 @@
 function parseParamVolcanoes(vulcanoseStrName) {
-    // Парсинг наименований вулканов и id с помощью регулярных выражений
-    vulcanoseStrName = vulcanoseStrName.replace(new RegExp("\"\\],", 'g'), "!");
-    vulcanoseStrName = vulcanoseStrName.replace(new RegExp("\\[", 'g'), "");
-    vulcanoseStrName = vulcanoseStrName.replace(new RegExp("\"", 'g'), "");
-    vulcanoseStrName = vulcanoseStrName.replace(new RegExp("\\]\\]", 'g'), "");
-    vulcanoseStrId = vulcanoseStrName.replace(new RegExp("\\s[а-яА-Я,-]*", 'ug'), "");
-    vulcanoseStrName = vulcanoseStrName.replace(new RegExp("[\\d,]", 'g'), "");
-    // Преобразование строки в массив элементов
-    var volcanoesArrName = vulcanoseStrName.split('! ');
-    var volcanoesArrId = vulcanoseStrId.split(',!');
+    // Парсинг наименований вулканов и id
+    var volcanoesArr = JSON.parse(vulcanoseStrName),
+        volcanoesArrId = new Array(),
+        volcanoesArrName = new Array();
+    for (var i = 0; i < volcanoesArr.length; i++) {
+        volcanoesArrId.push(volcanoesArr[i][0]);
+        volcanoesArrName.push(volcanoesArr[i][1]);
+    }
     // Создание и возврат массива из массивов id и наименований вулканов
     var arrVolcanoesParam = new Array();
     arrVolcanoesParam.push(volcanoesArrId, volcanoesArrName);
@@ -17,52 +15,67 @@ function parseParamVolcanoes(vulcanoseStrName) {
 
 function createJsonForYandexMap() {
 
+    var volcanoesArrInfo = JSON.parse(vulcanoseStrFullInfo),
+        jsonDataForYandexMap = "";
+    // Формат JSON-строки для Яндекс.Карт
+    jsonDataForYandexMap += '{ "type": "FeatureCollection",' +
+                              '"features": [';
+    for (var i = 0; i < volcanoesArrInfo.length; i++) {
+        jsonDataForYandexMap +=  '{ "type": "Feature",' +
+                                   '"id": ' + volcanoesArrInfo[i][0] + ',' +
+                                   '"geometry": {' +
+                                        '"type": "Point",' +
+                                        '"coordinates": [ ' + volcanoesArrInfo[i][2] + ', ' + volcanoesArrInfo[i][3] + ' ]' +
+                                   '}, "properties": {' +
+                                        '"hintContent": "' + volcanoesArrInfo[i][1] + '"' +
+                                 '}},';
+    }
+    jsonDataForYandexMap = jsonDataForYandexMap.slice(0, -1);
+    jsonDataForYandexMap += ']}';
+    return jsonDataForYandexMap;
 } // Формироване JSON строки с данными вулканов для Яндекс.Карты
 
 function showDescriptionVolcano(idVolcano) {
 
     $.ajax({
-        url: 'http://localhost:8000/get_info_volcano/?key=' + idVolcano
+        url: "http://localhost:8000/get_info_volcano/?key=" + idVolcano
     }).done(function (data) {
-        var infoVolcano = data;
+        var nameVolcano = data.name, // Наименование вулкана
+            srcImgVolcano = "http://localhost:8000/" + data.image.substring(4), // Путь к изображению вулкана с обрезкой первых 3-ех символов
+            activityVolcano = data.activ, // Действующий или потухший
+            latitude = data.latitude, // Широта
+            longitude = data.longitude, // Долгота
+            descriptionVolcano = data.description; // Описание вулкана
+        // Изменение соответствующей информации
+        $("#modal-header-text").text('Информация о вулкане: ' + nameVolcano);
+        $("#modal-name-volcano").text(nameVolcano);
+        $("#img-volcano").attr("src", srcImgVolcano);
+
+        if (activityVolcano) {
+            $("#activity-val").text("Действующий");
+        } else {
+            $("#activity-val").text("Потухший");
+        }
+
+        $("#latitude-val").text(latitude);
+        $("#longitude-val").text(longitude);
+        $("#description-volcano").text(descriptionVolcano);
+        $("#infoVolcano").modal('show');
         });
-    
-    var nameVolcano = "Безымяный",
-        srcImgVolcano = "http://jurmalacamp.com/mz/sudxsupes/img795744.jpg",
-        activityVolcano = false,
-        latitude = "100.111",
-        longitude = "555.222",
-        descriptionVolcano = "Описание вулкана...";
-
-    $("#modal-header-text").text('Информация о вулкане: ' + nameVolcano);
-    $("#modal-name-volcano").text(nameVolcano);
-    $("#img-volcano").attr("src", srcImgVolcano);
-
-    if (activityVolcano) {
-        $("#activity-val").text("Действующий");
-    } else {
-        $("#activity-val").text("Потухший");
-    }
-
-    $("#latitude-val").text(latitude);
-    $("#longitude-val").text(longitude);
-    $("#description-volcano").text(descriptionVolcano);
-    $("#infoVolcano").modal('show');
 
 } // Отбражение информации о вулкане во всплывающем окне
 
 function selectAllVolcanoes(totalVolcanoes) {
-    for (var i = 1; i < totalVolcanoes; i++) {
+    for (var i = 1; i <= totalVolcanoes; i++) {
         selectVolcanoe(i);
     }
-    
-}
+} // Функция выбора всех вулканов
 
 var arrVolcanoesParam = parseParamVolcanoes(vulcanoseStrName),
     volcanoesArrId = arrVolcanoesParam[0], // Массив id вулканов
     volcanoesArrName = arrVolcanoesParam[1], // Массив наименований вулканов
     divListVolcanoes = document.getElementById("list-volcanoes");
-
+    
 divListVolcanoes.innerHTML = '<h3 class="margin-top-off margin-bottom-off">Выберите необходимые вулканы из списка и/или по группам:</h3><br/>' +
                              '<div class="btn-group">' +
                                 '<button type="button" class="btn btn-primary" style="margin-right: 5px" onclick="selectAllVolcanoes(' +
