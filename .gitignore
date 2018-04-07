@@ -265,3 +265,5 @@ __pycache__/
 /ExpertSystem/env/
 
 /ExpertSystem/ExpertSystem.pyproj
+
+/ExpertSystem/env/.ptvs/AnalysisLog.txt
