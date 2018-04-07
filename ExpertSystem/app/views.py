@@ -1,4 +1,4 @@
-"""
+﻿"""
 Definition of views.
 """
 
@@ -17,6 +17,7 @@ from openpyxl import load_workbook
 from django.core.exceptions import ObjectDoesNotExist
 import os
 from django.http import HttpResponse
+from django.http import JsonResponse
 
 def home(request):
     """Renders the home page."""
@@ -162,3 +163,16 @@ def fillDB(request):
                 value_now.save()
 
         return HttpResponse("Вроде заполнилось всё")
+
+def getInfoVolcano(request):
+    key = request.GET.get('key')
+    volcano_info = Volcano.objects.get(pk=key)
+    data = {}
+    data['name']=volcano_info.name
+    data['latitude']=volcano_info.latitude
+    data['longitude']=volcano_info.longitude
+    data['activ']=volcano_info.activ
+    data['description']=volcano_info.description
+    data['image']=str(volcano_info.image)
+    json_data=json.dumps(data, cls=DjangoJSONEncoder)
+    return HttpResponse(json_data, content_type='application/json')
