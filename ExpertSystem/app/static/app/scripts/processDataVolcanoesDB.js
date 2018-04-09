@@ -1,3 +1,5 @@
+var selectAllVolcanoesCountRun = 0;
+
 function parseParamVolcanoes(vulcanoseStrName) {
     // Парсинг наименований вулканов и id
     var volcanoesArr = JSON.parse(vulcanoseStrName),
@@ -66,10 +68,20 @@ function showDescriptionVolcano(idVolcano) {
 } // Отбражение информации о вулкане во всплывающем окне
 
 function selectAllVolcanoes(totalVolcanoes) {
+    selectAllVolcanoesCountRun++;
+    console.log(selectAllVolcanoesCountRun);
+    if (selectAllVolcanoesCountRun % 2 == 0) selectAllVolcanoesSpecialParam = "onlyOff";
+    else selectAllVolcanoesSpecialParam = "onlyOn";
+
     for (var i = 1; i <= totalVolcanoes; i++) {
-        selectVolcanoe(i);
+        selectVolcanoe(i, selectAllVolcanoesSpecialParam);
     }
 } // Функция выбора всех вулканов
+
+function sendResult() {
+    jsonStr = JSON.stringify(selectedVolcanoes);
+    console.log(jsonStr);
+}
 
 var arrVolcanoesParam = parseParamVolcanoes(vulcanoseStrName),
     volcanoesArrId = arrVolcanoesParam[0], // Массив id вулканов
@@ -86,7 +98,7 @@ divListVolcanoes.innerHTML = '<h3 class="margin-top-off margin-bottom-off">Вы�
                              '<ul class="list-group">';
 // Формирование списка вулканов
 volcanoesArrName.forEach(function (item, i, arr) {
-    divListVolcanoes.innerHTML += '<div class="row row-flex">' +
+    divListVolcanoes.innerHTML += '<div class="row row-flex height45_6 padding-bottom5px">' +
                                        '<div class="col-xs-9">' +
                                            '<li id="' + volcanoesArrId[i] + '" class="green list-group-item">' + item + '</li>' +
                                        '</div>' +
@@ -94,7 +106,7 @@ volcanoesArrName.forEach(function (item, i, arr) {
                                            '<button type="button" class="btn btn-block btn-height100" onclick="showDescriptionVolcano(' +
                                                    volcanoesArrId[i] + ')">Описание</button>' +
                                        '</div>' +
-                                       '<div class="margin2px clearfix"></div>' +
+                                       '<div class="clearfix"></div>' +
                                   '</div>';
 });
 divListVolcanoes.innerHTML += '</ul>';
