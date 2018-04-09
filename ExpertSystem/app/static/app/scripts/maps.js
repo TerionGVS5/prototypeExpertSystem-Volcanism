@@ -1,7 +1,8 @@
 function selectVolcanoe(objectId, special) { 
     var strId = '#' + objectId; //строка с id элемента в списке вулканов
-    //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
+    // Если передан параметр "onlyOn", то вершина не может быть удалена из массива, несмотря на ее присутствие (функция selectAllVolcanoes)
     if ((special == "onlyOn") || (special == "")) {
+        //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
         if ((selectedVolcanoes.indexOf(objectId) == -1)) {
             selectedVolcanoes.push(objectId); // Добавление id вулкана в массив
             $(strId).removeClass('green'); // Удаление класса элемента списка
@@ -10,12 +11,13 @@ function selectVolcanoe(objectId, special) {
             objectManager.objects.setObjectOptions(objectId, {
                 preset: 'islands#yellowDotIcon'
             });
-            console.log(selectedVolcanoes);
+            //console.log(selectedVolcanoes);
             return 0;
-            // иначе удаляем вершину и возвращаем исходный цвет
         }
     }
-    if ((special == "onlyOff") || (special == "")) {
+    // Если передан параметр "onlyOff", то вершина не может быть добавлена в массив, несмотря на ее отсутствие (функция selectAllVolcanoes)
+    if ((special == "onlyOff") || (special == "")) { 
+        // Удаляем вершину и возвращаем исходный цвет
         if (selectedVolcanoes.indexOf(objectId) != -1) {
             selectedVolcanoes.splice(selectedVolcanoes.indexOf(objectId), 1); // Удаление id вулкана из массива
             $(strId).removeClass('yellow');
@@ -23,7 +25,7 @@ function selectVolcanoe(objectId, special) {
             objectManager.objects.setObjectOptions(objectId, {
                 preset: 'islands#greenDotIcon'
             });
-            console.log(selectedVolcanoes);
+            //console.log(selectedVolcanoes);
             return 0;
         }
     }

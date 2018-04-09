@@ -1,37 +1,26 @@
-var selectAllVolcanoesCountRun = 0;
-
-function parseParamVolcanoes(vulcanoseStrName) {
-    // Парсинг наименований вулканов и id
-    var volcanoesArr = JSON.parse(vulcanoseStrName),
-        volcanoesArrId = new Array(),
-        volcanoesArrName = new Array();
-    for (var i = 0; i < volcanoesArr.length; i++) {
-        volcanoesArrId.push(volcanoesArr[i][0]);
-        volcanoesArrName.push(volcanoesArr[i][1]);
-    }
-    // Создание и возврат массива из массивов id и наименований вулканов
-    var arrVolcanoesParam = new Array();
-    arrVolcanoesParam.push(volcanoesArrId, volcanoesArrName);
-    return arrVolcanoesParam;
-} // Парсинг наименований вулканов и id
-
+var selectAllVolcanoesCountRun = 0, // Количество запусков функции selectAllVolcanoes
+    selectActiveVolcanoesCountRun = 0, // Количество запусков функции selectActiveVolcanoes
+    selectInactiveVolcanoesCountRun = 0, // Количество запусков функции selectInactiveVolcanoes()
+    arrVolcanoesInfo = JSON.parse(volcanoesJsonFullInfo), // Структура: [номер [0 => id, 1 => name, 2 => latitude, 3 => longitude, 4 => active], ...]
+    arrIdActiveVolcanoes = createArrIdActiveVolcanoes(), // Массив id действующих вулканов
+    arrIdInactiveVolcanoes = createArrIdInactiveVolcanoes(); // Массив id потухших вулканов
+    
 function createJsonForYandexMap() {
 
-    var volcanoesArrInfo = JSON.parse(vulcanoseStrFullInfo),
-        jsonDataForYandexMap = "";
+    var jsonDataForYandexMap = "";
     // Формат JSON-строки для Яндекс.Карт
     jsonDataForYandexMap += '{ "type": "FeatureCollection",' +
-                              '"features": [';
-    for (var i = 0; i < volcanoesArrInfo.length; i++) {
+        '"features": [';
+    arrVolcanoesInfo.forEach(function(item, i, arr) {
         jsonDataForYandexMap +=  '{ "type": "Feature",' +
-                                   '"id": ' + volcanoesArrInfo[i][0] + ',' +
+                                   '"id": ' + item[0] + ',' +
                                    '"geometry": {' +
                                         '"type": "Point",' +
-                                        '"coordinates": [ ' + volcanoesArrInfo[i][2] + ', ' + volcanoesArrInfo[i][3] + ' ]' +
+                                        '"coordinates": [ ' + item[2] + ', ' + item[3] + ' ]' +
                                    '}, "properties": {' +
-                                        '"hintContent": "' + volcanoesArrInfo[i][1] + '"' +
+                                        '"hintContent": "' + item[1] + '"' +
                                  '}},';
-    }
+    })
     jsonDataForYandexMap = jsonDataForYandexMap.slice(0, -1);
     jsonDataForYandexMap += ']}';
     return jsonDataForYandexMap;
@@ -65,48 +54,89 @@ function showDescriptionVolcano(idVolcano) {
         $("#infoVolcano").modal('show');
         });
 
-} // Отбражение информации о вулкане во всплывающем окне
+} // Отображение информации о вулкане во всплывающем окне
 
-function selectAllVolcanoes(totalVolcanoes) {
+function createArrIdActiveVolcanoes() {
+    var arrIdActiveVolcanoes = new Array();
+    arrVolcanoesInfo.forEach(function (item, i, arr) {
+        if (item[4] == true) arrIdActiveVolcanoes.push(item[0]);
+    })
+    return arrIdActiveVolcanoes;
+} // Создание массиа с id действующих вулканов
+
+function createArrIdInactiveVolcanoes() {
+    var arrIdInactiveVolcanoes = new Array();
+    arrVolcanoesInfo.forEach(function (item, i, arr) {
+        if (item[4] == false) arrIdInactiveVolcanoes.push(item[0]);
+    })
+    return arrIdInactiveVolcanoes;
+} // Создание массива с id потухших вулканов
+
+function selectAllVolcanoes() {
+    var selectAllVolcanoesSpecialParam = "";
     selectAllVolcanoesCountRun++;
-    console.log(selectAllVolcanoesCountRun);
     if (selectAllVolcanoesCountRun % 2 == 0) selectAllVolcanoesSpecialParam = "onlyOff";
     else selectAllVolcanoesSpecialParam = "onlyOn";
 
-    for (var i = 1; i <= totalVolcanoes; i++) {
+    for (var i = 1; i <= arrVolcanoesInfo.length; i++) {
         selectVolcanoe(i, selectAllVolcanoesSpecialParam);
     }
 } // Функция выбора всех вулканов
 
+function selectActiveVolcanoes() {
+    var selectActiveVolcanoesSpecialParam = "";
+    selectActiveVolcanoesCountRun++;
+    if (selectActiveVolcanoesCountRun % 2 == 0) selectActiveVolcanoesSpecialParam = "onlyOff";
+    else selectActiveVolcanoesSpecialParam = "onlyOn";
+
+    arrIdActiveVolcanoes.forEach(function (item, i, arr) {
+        selectVolcanoe(item, selectActiveVolcanoesSpecialParam);
+    }) 
+} // Функция выбора действующих вулканов
+
+function selectInactiveVolcanoes() {
+    var selectInactiveVolcanoesSpecialParam = "";
+    selectInactiveVolcanoesCountRun++;
+    if (selectInactiveVolcanoesCountRun % 2 == 0) selectInactiveVolcanoesSpecialParam = "onlyOff";
+    else selectInactiveVolcanoesSpecialParam = "onlyOn";
+
+    arrIdInactiveVolcanoes.forEach(function (item, i, arr) {
+        selectVolcanoe(item, selectInactiveVolcanoesSpecialParam);
+    }) 
+} // Функция выбора потухших вулканов
+
+function createListVolcanoes() {
+    $("#list-volcanoes").html(function() {
+        var content = "";
+        content += '<h4 class="margin-top-off margin-bottom-off padding-bottom5px">Выберите необходимые вулканы из списка и/или по группам:</h4>' +
+                    '<div class="row row-flex padding-bottom5px">' +
+                        '<div class="col-xs-12 text-center">' + 
+                            '<div class="btn-group btn-group-justified padding-bottom5px">' +
+                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectAllVolcanoes()">Все</a>' +
+                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectActiveVolcanoes()">Действующие</a>' +
+                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectInactiveVolcanoes()">Потухшие</a>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' + 
+                    '<ul class="list-group">';
+        arrVolcanoesInfo.forEach(function (item, i, arr) {
+            content += '<div class="row row-flex height45_6 padding-bottom5px">' +
+                            '<div class="col-xs-9">' +
+                                '<li id="' + item[0] + '" class="green list-group-item">' + item[1] + '</li>' +
+                            '</div>' +
+                            '<div class="col-xs-3">' +
+                                '<button type="button" class="btn btn-block btn-height100" onclick="showDescriptionVolcano(' + item[0] + ')">Описание</button>' +
+                            '</div>' +
+                            '<div class="clearfix"></div>' +
+                        '</div>';
+        });
+        content += '</ul>';
+        return content;
+    });
+} // Формирование списка вулканов
+
 function sendResult() {
     jsonStr = JSON.stringify(selectedVolcanoes);
-    console.log(jsonStr);
-}
+} // Передача массива с вулканами на следующую страницу
 
-var arrVolcanoesParam = parseParamVolcanoes(vulcanoseStrName),
-    volcanoesArrId = arrVolcanoesParam[0], // Массив id вулканов
-    volcanoesArrName = arrVolcanoesParam[1], // Массив наименований вулканов
-    divListVolcanoes = document.getElementById("list-volcanoes");
-    
-divListVolcanoes.innerHTML = '<h3 class="margin-top-off margin-bottom-off">Выберите необходимые вулканы из списка и/или по группам:</h3><br/>' +
-                             '<div class="btn-group">' +
-                                '<button type="button" class="btn btn-primary" style="margin-right: 5px" onclick="selectAllVolcanoes(' +
-                                        volcanoesArrId.length + ')">Все</button>' +
-                                '<button type="button" class="btn btn-primary" style="margin-right: 5px" onclick="">Действующие</button>' + 
-                                '<button type="button" class="btn btn-primary" style="margin-right: 5px" onclick="">Потухшие</button>' +
-                             '</div>' +
-                             '<ul class="list-group">';
-// Формирование списка вулканов
-volcanoesArrName.forEach(function (item, i, arr) {
-    divListVolcanoes.innerHTML += '<div class="row row-flex height45_6 padding-bottom5px">' +
-                                       '<div class="col-xs-9">' +
-                                           '<li id="' + volcanoesArrId[i] + '" class="green list-group-item">' + item + '</li>' +
-                                       '</div>' +
-                                       '<div class="col-xs-3">' +
-                                           '<button type="button" class="btn btn-block btn-height100" onclick="showDescriptionVolcano(' +
-                                                   volcanoesArrId[i] + ')">Описание</button>' +
-                                       '</div>' +
-                                       '<div class="clearfix"></div>' +
-                                  '</div>';
-});
-divListVolcanoes.innerHTML += '</ul>';
+createListVolcanoes();
