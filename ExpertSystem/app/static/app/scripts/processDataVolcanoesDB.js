@@ -29,7 +29,8 @@ function createJsonForYandexMap() {
 function showDescriptionVolcano(idVolcano) {
 
     $.ajax({
-        url: "http://localhost:8000/get_info_volcano/?key=" + idVolcano
+        url: "http://localhost:8000/get_info_volcano/?key=" + idVolcano,
+        crossDomain: true
     }).done(function (data) {
         var nameVolcano = data.name, // Наименование вулкана
             srcImgVolcano = "http://localhost:8000/" + data.image.substring(4), // Путь к изображению вулкана с обрезкой первых 3-ех символов
