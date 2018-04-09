@@ -1,7 +1,7 @@
 function selectVolcanoe(objectId, special) { 
     var strId = '#' + objectId; //строка с id элемента в списке вулканов
     //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
-    if ((special == "onlyOn") || (special == "") ) {
+    if ((special == "onlyOn") || (special == "")) {
         if ((selectedVolcanoes.indexOf(objectId) == -1)) {
             selectedVolcanoes.push(objectId); // Добавление id вулкана в массив
             $(strId).removeClass('green'); // Удаление класса элемента списка
@@ -10,18 +10,24 @@ function selectVolcanoe(objectId, special) {
             objectManager.objects.setObjectOptions(objectId, {
                 preset: 'islands#yellowDotIcon'
             });
-            //console.log(selectedVolcanoes);
+            console.log(selectedVolcanoes);
+            return 0;
             // иначе удаляем вершину и возвращаем исходный цвет
-        } else if ((special == "onlyOff") || (special == "")) {
+        }
+    }
+    if ((special == "onlyOff") || (special == "")) {
+        if (selectedVolcanoes.indexOf(objectId) != -1) {
             selectedVolcanoes.splice(selectedVolcanoes.indexOf(objectId), 1); // Удаление id вулкана из массива
             $(strId).removeClass('yellow');
             $(strId).addClass('green');
             objectManager.objects.setObjectOptions(objectId, {
                 preset: 'islands#greenDotIcon'
             });
-            //console.log(selectedVolcanoes);
+            console.log(selectedVolcanoes);
+            return 0;
         }
     }
+
 
 } // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
 
