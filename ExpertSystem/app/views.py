@@ -328,3 +328,12 @@ def onegraph(request):
             new_sets[i][j] = who_is_who[sets[i][j]-1]
     json_data=json.dumps(new_sets, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type='application/json')
+
+def getInfoSign(request):
+    SignFullInfo = Sign.objects.all().values_list('name', 'number', 'groupsign')
+    ListSignFullInfo = list(SignFullInfo)
+    ListSignFullInfo = [list(el) for el in ListSignFullInfo]
+    for element in ListSignFullInfo:
+        element[2] = GroupSign.objects.get(pk=element[2]).name
+    SignJsonFullInfo = json.dumps(ListSignFullInfo, cls=DjangoJSONEncoder)
+    return HttpResponse(SignJsonFullInfo, content_type='application/json')

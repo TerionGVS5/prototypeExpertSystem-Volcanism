@@ -26,6 +26,16 @@ class SignAddForm(ModelForm):
     class Meta:
         model = Sign
         fields = ['name','number', 'groupsign']
+        labels = {
+            'name':'Имя',
+            'number':'Номер',
+            'groupsign':'Группа признаков'
+            }
+        widgets = {
+            'name': forms.TextInput({'class': 'form-control'}),
+            'number': forms.NumberInput({'class': 'form-control'}),
+            'groupsign':forms.Select({'class': 'form-control'})
+            }
 
 class ValueAddForm(ModelForm):
     class Meta:
