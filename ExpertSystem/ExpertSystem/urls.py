@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^filldb$', app.views.fillDB, name='filldb'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^get_info_volcano/$', app.views.getInfoVolcano, name='get_info_volcano'),
+    url(r'^get_info_sign/$', app.views.getInfoSign, name='get_info_sign'),
     url(r'^onegraph/$', app.views.onegraph, name='onegraph'),
     url(r'^about', app.views.about, name='about'),
     url(r'^addsign', app.views.Addsign.as_view(), name='addsign'),
