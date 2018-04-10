@@ -1,4 +1,4 @@
-{% extends "app/layout.html" %}
+﻿{% extends "app/layout.html" %}
 
 {% block content %}
 
@@ -6,6 +6,8 @@
 <form action="/addsign/" method="post">
     {% csrf_token %}
     {{ form }}
-  <input type="submit" value="Submit" />
+
+  <input type="submit" value="Добавить" class="btn btn-default" />
+        
 </form>
 {% endblock %}
