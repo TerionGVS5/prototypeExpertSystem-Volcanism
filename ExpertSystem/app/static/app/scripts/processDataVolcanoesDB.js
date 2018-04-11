@@ -1,3 +1,4 @@
+
 var selectAllVolcanoesCountRun = 0, // Количество запусков функции selectAllVolcanoes
     selectActiveVolcanoesCountRun = 0, // Количество запусков функции selectActiveVolcanoes
     selectInactiveVolcanoesCountRun = 0, // Количество запусков функции selectInactiveVolcanoes()
@@ -112,7 +113,7 @@ function createListVolcanoes() {
         content += '<h4 class="margin-top-off margin-bottom-off padding-bottom5px">Выберите необходимые вулканы из списка и/или по группам:</h4>' +
                     '<div class="row row-flex padding-bottom5px">' +
                         '<div class="col-xs-12 text-center">' + 
-                            '<div class="btn-group btn-group-justified padding-bottom5px">' +
+                            '<div id="groupBtnSelectVolcanoes" class="btn-group btn-group-justified padding-bottom5px">' +
                                 '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectAllVolcanoes()">Все</a>' +
                                 '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectActiveVolcanoes()">Действующие</a>' +
                                 '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectInactiveVolcanoes()">Потухшие</a>' +
@@ -140,4 +141,14 @@ function sendResult() {
     jsonStr = JSON.stringify(selectedVolcanoes);
 } // Передача массива с вулканами на следующую страницу
 
+function offElemForCatalog() {
+    var referrer = document.referrer;
+    if (referrer == "http://localhost:8000/") {
+        $("#groupBtnSelectVolcanoes").css('display','none');
+        $("#btn-next").css('display','none');
+    }
+} // Отключение элементов перехода для каталога вулканов
+
 createListVolcanoes();
+
+offElemForCatalog();

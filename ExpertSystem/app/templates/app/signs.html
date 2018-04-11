@@ -1,0 +1,32 @@
+﻿{% extends "app/layout.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    <script src="{% static 'app/scripts/processSigns.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 id="test" class="text-center page-header">Выберите необходимые признаки из списка групп</h2>
+            </div>
+        </div>
+        <div class="row row-flex">
+            <div class="col-xs-6">      
+               <ul class="list-group">
+                   <li class="green list-group-item margin2px">dwa</li>
+                   <li class="green list-group-item margin2px">sxzxz</li>
+               </ul>
+            </div>
+            <div class="col-xs-6">
+                <ul class="list-group">
+                   <li class="green list-group-item margin2px">dwa</li>
+                   <li class="green list-group-item margin2px">sxzxz</li>
+               </ul>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+
+{% endblock %}
