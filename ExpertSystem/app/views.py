@@ -332,6 +332,7 @@ def onegraph(request):
     return HttpResponse(json_data, content_type='application/json')
 
 def getInfoSign(request):
+    '''
     SignFullInfo = Sign.objects.all().values_list('name', 'number', 'groupsign')
     ListSignFullInfo = list(SignFullInfo)
     ListSignFullInfo = [list(el) for el in ListSignFullInfo]
@@ -339,3 +340,13 @@ def getInfoSign(request):
         element[2] = GroupSign.objects.get(pk=element[2]).name
     SignJsonFullInfo = json.dumps(ListSignFullInfo, cls=DjangoJSONEncoder)
     return HttpResponse(SignJsonFullInfo, content_type='application/json')
+    '''
+    groups = GroupSign.objects.all()
+    data = {}
+    for group in groups:
+        signs = Sign.objects.filter(groupsign=group)
+        data[group.name]=[]
+        for sign in signs:
+            data[group.name].append({sign.name:sign.number})
+    data_json = json.dumps(data, cls=DjangoJSONEncoder)
+    return HttpResponse(data_json, content_type='application/json')
