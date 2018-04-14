@@ -1,0 +1,41 @@
+{% extends "app/layout.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    <script src="{% static 'app/scripts/processSigns.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 id="test" class="text-center page-header">Выберите необходимые признаки из списка групп</h2>
+            </div>
+        </div>
+        <div id="lists-signs">
+            <div class="row row-flex padding-bottom5px">
+                <div class="col-xs-12 btn-group-justified padding-bottom5px">
+                    <a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="">Выбрать все признаки</a>
+                </div>
+            </div>
+            <div class="row row-flex height550px overflow-scroll">
+                <div id="first-half-signs" class="col-xs-12"></div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div>
+            <div class="container">
+                <div class="dropdown">
+                <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Азиатская кухня
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#">Корейская</a></li>
+      <li><a href="#">Японская</a></li>
+      <li><a href="#">Китайская</a></li>
+    </ul>
+  </div>
+</div>
+        </div>
+    </div>
+
+{% endblock %}

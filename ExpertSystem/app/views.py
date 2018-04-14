@@ -48,6 +48,20 @@ def maps(request):
         }
     )
 
+def signs(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/signs.html',
+        {
+            'title':'Signs',
+            'message':'Your contact page.',
+            'year':datetime.now().year,
+        }
+    )
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)
@@ -124,7 +138,9 @@ class Addvolcano(View):
 
 class VolcanoUpdate(UpdateView):
     model = Volcano
-    fields = ['name', 'latitude', 'longitude','activ', 'groupvolcano','description','image']
+    form_class = VolcanoUpdateForm
+    
+
     template_name_suffix = '_update_form'
     success_url = '/'
 
@@ -314,3 +330,23 @@ def onegraph(request):
             new_sets[i][j] = who_is_who[sets[i][j]-1]
     json_data=json.dumps(new_sets, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type='application/json')
+
+def getInfoSign(request):
+    '''
+    SignFullInfo = Sign.objects.all().values_list('name', 'number', 'groupsign')
+    ListSignFullInfo = list(SignFullInfo)
+    ListSignFullInfo = [list(el) for el in ListSignFullInfo]
+    for element in ListSignFullInfo:
+        element[2] = GroupSign.objects.get(pk=element[2]).name
+    SignJsonFullInfo = json.dumps(ListSignFullInfo, cls=DjangoJSONEncoder)
+    return HttpResponse(SignJsonFullInfo, content_type='application/json')
+    '''
+    groups = GroupSign.objects.all()
+    data = {}
+    for group in groups:
+        signs = Sign.objects.filter(groupsign=group)
+        data[group.name]=[]
+        for sign in signs:
+            data[group.name].append({sign.name:sign.number})
+    data_json = json.dumps(data, cls=DjangoJSONEncoder)
+    return HttpResponse(data_json, content_type='application/json')

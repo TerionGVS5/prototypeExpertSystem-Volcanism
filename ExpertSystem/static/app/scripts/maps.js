@@ -1,25 +1,35 @@
-function selectVolcanoe(objectId) { 
+function selectVolcanoe(objectId, special) { 
     var strId = '#' + objectId; //строка с id элемента в списке вулканов
-    //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
-    if (selectedVolcanoes.indexOf(objectId) == -1) {
-        selectedVolcanoes.push(objectId); // Добавление id вулкана в массив
-        $(strId).removeClass('green'); // Удаление класса элемента списка
-        $(strId).addClass('yellow'); // Добавление класса элемента списка
-        // Метод setObjectOptions позволяет задавать опции объекта "на лету".
-        objectManager.objects.setObjectOptions(objectId, {
-            preset: 'islands#yellowDotIcon'
-        });
-        console.log(selectedVolcanoes);
-        // иначе удаляем вершину и возвращаем исходный цвет
-    } else {
-        selectedVolcanoes.splice(selectedVolcanoes.indexOf(objectId), 1); // Удаление id вулкана из массива
-        $(strId).removeClass('yellow');
-        $(strId).addClass('green');
-        objectManager.objects.setObjectOptions(objectId, {
-            preset: 'islands#greenDotIcon'
-        });
-        console.log(selectedVolcanoes);
+    // Если передан параметр "onlyOn", то вершина не может быть удалена из массива, несмотря на ее присутствие (функция selectAllVolcanoes)
+    if ((special == "onlyOn") || (special == "")) {
+        //Если id вулкана отсутствует в массиве, то выделяем вершину, элемент в списке цветом и добавляем id в массив
+        if ((selectedVolcanoes.indexOf(objectId) == -1)) {
+            selectedVolcanoes.push(objectId); // Добавление id вулкана в массив
+            $(strId).removeClass('green'); // Удаление класса элемента списка
+            $(strId).addClass('yellow'); // Добавление класса элемента списка
+            // Метод setObjectOptions позволяет задавать опции объекта "на лету".
+            objectManager.objects.setObjectOptions(objectId, {
+                preset: 'islands#yellowDotIcon'
+            });
+            //console.log(selectedVolcanoes);
+            return 0;
+        }
     }
+    // Если передан параметр "onlyOff", то вершина не может быть добавлена в массив, несмотря на ее отсутствие (функция selectAllVolcanoes)
+    if ((special == "onlyOff") || (special == "")) { 
+        // Удаляем вершину и возвращаем исходный цвет
+        if (selectedVolcanoes.indexOf(objectId) != -1) {
+            selectedVolcanoes.splice(selectedVolcanoes.indexOf(objectId), 1); // Удаление id вулкана из массива
+            $(strId).removeClass('yellow');
+            $(strId).addClass('green');
+            objectManager.objects.setObjectOptions(objectId, {
+                preset: 'islands#greenDotIcon'
+            });
+            //console.log(selectedVolcanoes);
+            return 0;
+        }
+    }
+
 
 } // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
 
@@ -73,17 +83,20 @@ function init() {
         // обратимся к дочерним коллекциям ObjectManager.
         objectManager.objects.options.set('preset', 'islands#greenDotIcon');
         myMap.geoObjects.add(objectManager);
+
+        objectManager.add(createJsonForYandexMap()); // Добавление данных из JSON-строки
+
         // Загрузка данных о метках из JSON-файла
-        $.ajax({
+        /*$.ajax({
             url: "http://localhost:8000/static/app/scripts/data.json"
         }).done(function (data) {
             objectManager.add(data);
-        });
+        });*/
     
         function onObjectEvent(e) {
             var objectId = e.get('objectId');
             if (e.get('type') == 'click') {
-                selectVolcanoe(objectId); // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
+                selectVolcanoe(objectId, ""); // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
             } 
         }
 
@@ -92,7 +105,7 @@ function init() {
         document.body.addEventListener("click", function (event) {
             if (event.target.nodeName == "LI") {
                 var objectId = parseInt(event.target.id);
-                selectVolcanoe(objectId); // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
+                selectVolcanoe(objectId, ""); // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
             }
         });
 
