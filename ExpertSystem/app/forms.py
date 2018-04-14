@@ -87,7 +87,7 @@ class VolcanoAddForm(ModelForm):
             }
 
 class VolcanoSelectForm(forms.Form):
-    volcano = forms.ModelChoiceField(queryset=Volcano.objects.all(), empty_label="(Nothing)", widget=forms.Select({'class': 'form-control'}))
+    volcano = forms.ModelChoiceField(queryset=Volcano.objects.all(), empty_label="(Nothing)", label='Вулкан', widget=forms.Select({'class': 'form-control'}))
 
 class VolcanoUpdateForm(ModelForm):
     class Meta:
