@@ -363,15 +363,13 @@ def masks(request):
     print(T)
 
     def MaskMethod(T) :
-        ##T - матриа признаков, которая поступает на вход, первый столбец матрицы - это айдишники вулканов из БД 
-        #T = [  #ID X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12
-        #     [ 1,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0], #A1
-        #     [ 2,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1], #A2
-        #     [ 6,  1,  0,  1,  0,  1,  1,  0,  1,  1,  0,  0,  0], #A3
-        #     [ 7,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  1], #A4
-        #     [ 8,  0,  0,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0], #A5
-        #     [ 9,  1,  1,  1,  1,  0,  0,  1,  1,  1,  1,  0,  0], #A6
-        #    ]
+	    ##T - матриа признаков, которая поступает на вход, первый столбец матрицы - это айдишники вулканов из БД 
+	    #T = [  #ID X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12
+	    #	 [ 1,  1,  1,  1,  1], #A1
+	    #	 [ 2,  0,  0,  0,  0], #A2
+	    #	 [ 3,  1,  0,  1,  0], #A3
+	    #	 [ 4,  1,  1,  1,  1], #A4 
+	    #	 ]
 
         m = 0 #Количество строк
         for i in T :
@@ -391,42 +389,41 @@ def masks(request):
             Table[i][0] = "A"+str(i)
 
         for i in range(1, m+1) :
-            for j in range(2, n+1) :
-                Table[i][j] = T[i-1][j-1]
-
+            for j in range(1, n+1) :
+                Table[i][j] = T[i-1][j]
 
         R1 = round((n / 2) + (n / 4)) #Порог различимости 
         R2 = round((n / 2) + (n / 4)) #Порог сходства 
 
-        MAT = [["null"] * (n+1) for i in range(m)]
+        MAT = [[0] * (n+1) for i in range(m)]
         MATprev = []
         for i in range(n) :
-            MATprev.append("null")
+            MATprev.append(0)
         MATtmp = []
         for i in range(n) :
-            MATtmp.append("null")
+            MATtmp.append(0)
         differenceR1 = 0
         differenceR2 = 0 
 
-        for i in range(n-1) : 
-            MAT[0][i]=T[0][i]
-            MATprev[i]=T[0][i]
+        for i in range(n) : 
+            MAT[0][i]=T[0][i+1]
+            MATprev[i]=T[0][i+1]
 
         MAT[0][n]=1
 
-        for i in range(1,m-1):
+        for i in range(1,m):
             for k in range(m-1):
-                for g in range (n-1):
-                    if MAT[k][g] != T[i][g] :
+                for g in range (n):
+                    if MAT[k][g] != T[i][g+1] :
                         differenceR2+=1;
                 if differenceR2 < R2 :
-                      break
-            for j in range(n-1) :
-                if T[i][j] != MATprev[j] :
+                    break
+            for j in range(n) :
+                if T[i][j+1] != MATprev[j] :
                     differenceR1+=1
-                MATtmp[j]=T[i][j]
+                MATtmp[j]=T[i][j+1]
             if differenceR1 >= R1 and differenceR2 >= R2 : 
-                for j in range(n-1) :
+                for j in range(n) :
                     MAT[i][j]= MATtmp[j]
                     MATprev[j]= MATtmp[j]
                 MAT[i][n] = 1
@@ -440,6 +437,7 @@ def masks(request):
             elem.append("null")
         len(Table[0])
         Table[0][len(Table[0])-1] = 'M'
+
 
         j = 1
         for i in range(1,m):
@@ -461,9 +459,9 @@ def masks(request):
         k = 0
         for i in range(m-1) :
             if MAT[i][n] == 1 :
-                for g in range (m-1) :
-                    for j in range (n-1) :
-                        if T[g][j] == MAT[i][j] : 
+                for g in range (m) :
+                    for j in range (n) :
+                        if T[g][j+1] == MAT[i][j] : 
                             differenceR2 += 1
                     if differenceR2 >= R2 :
                         Table[g+1][codesBegin+k] = '1'
@@ -475,7 +473,7 @@ def masks(request):
         i = 0
         Clusters = [["null"] * (2) for i in range(m+1)]
         tmpCluster = ""
-        for i in range(1,m) :
+        for i in range(1,m+1) :
             for j in range(codesBegin, codesEnd+1) :
                 tmpCluster = tmpCluster + Table[i][j]
             Clusters[i-1][0] =tmpCluster #Значение
@@ -495,11 +493,12 @@ def masks(request):
                     Clusters[i+1][0] =  tmpCluster1[0]
                     Clusters[i+1][1] =  tmpCluster1[1]
 
+
         l =0
         Res = ""
-        for i in range(1,m+1) :
+        for i in range(m+1) :
             if (Clusters[i-1][0] != Clusters[i][0]) and Clusters[i][0] != "null" :
-                if i>1 :
+                if i>=1 :
                     Res = Res + " "
                 l += 1
             if Clusters[i][1] != "null" :
@@ -509,6 +508,7 @@ def masks(request):
 
         a = Res.split(" ")  
 
+
         ResReal = []
         newstr = ""
         i = 0
@@ -516,7 +516,7 @@ def masks(request):
             ResReal.append([])
             for symb in elem :
                 if symb != "a" :
-                   newstr = newstr + symb
+                    newstr = newstr + symb
                 else :
                     if newstr != "" :
                         ResReal[i].append(int(newstr))
@@ -526,6 +526,8 @@ def masks(request):
                 newstr = ""
             i += 1
 
+
+
         i = 0
         ResultatTuTBudet = []
         for elem in ResReal :
@@ -533,7 +535,7 @@ def masks(request):
             for number in elem :
                 ResultatTuTBudet[i].append(T[number-1][0])
             i += 1
-        return ResultatTuTBudet
+        return ResultatTuTBudet 
     data = MaskMethod(T)
     json_data=json.dumps(data, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type='application/json')
