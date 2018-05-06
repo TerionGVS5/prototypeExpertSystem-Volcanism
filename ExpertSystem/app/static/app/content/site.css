@@ -118,7 +118,7 @@ div.height {
 
 img.full-size {
     width: 100%;
-    height: 100%
+    height: 300px;
 }
 
 .margin-top-off {
@@ -139,4 +139,18 @@ img.full-size {
 
 m-r-5px {
     margin-right: 5px;
+}
+
+.width100px {
+    width: 100px;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.vertical-middle {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
 }

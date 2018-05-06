@@ -147,9 +147,17 @@ function selectSign(signId, numberGroup, special) {
 
 } // Функция изменяет цвет фона элемента списка и добавляет/удаляет id признака из массива
 
-function sendResult() {
-    jsonStr = JSON.stringify(selectedSigns);
-} // Передача массива с признаками на следующую страницу
+function sendResultAndPageMaps() {
+    serializeSelectedSigns = JSON.stringify(selectedSigns);
+    sessionStorage.setItem('serializeSelectedSigns', serializeSelectedSigns);
+    console.log(selectedSigns);
+    if (selectedSigns.length != 0) {
+        location.href = '/maps';
+    } else {
+        alert("Необходимо выбрать как минимум один признак");
+    }
+    
+} // Передача json объекта через сессионное хранилище и переход на страницу выбора вулканов
 
 document.body.addEventListener("click", function (event) {
     if (event.target.nodeName == "LI") {

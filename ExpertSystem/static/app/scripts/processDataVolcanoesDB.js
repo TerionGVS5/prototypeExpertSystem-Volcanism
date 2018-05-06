@@ -113,10 +113,10 @@ function createListVolcanoes() {
         content += '<h4 class="margin-top-off margin-bottom-off padding-bottom5px">Выберите необходимые вулканы из списка и/или по группам:</h4>' +
                     '<div class="row row-flex padding-bottom5px">' +
                         '<div class="col-xs-12 text-center">' + 
-                            '<div id="groupBtnSelectVolcanoes" class="btn-group btn-group-justified padding-bottom5px">' +
-                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectAllVolcanoes()">Все</a>' +
-                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectActiveVolcanoes()">Действующие</a>' +
-                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectInactiveVolcanoes()">Потухшие</a>' +
+                            '<div id="groupBtnSelectVolcanoes" class="btn-group btn-group-justified padding-bottom5px hidden">' +
+                                '<a href="#" class="btn btn-primary" onclick="selectAllVolcanoes()">Все</a>' +
+                                '<a href="#" class="btn btn-primary" onclick="selectActiveVolcanoes()">Действующие</a>' +
+                                '<a href="#" class="btn btn-primary" onclick="selectInactiveVolcanoes()">Потухшие</a>' +
                             '</div>' +
                         '</div>' +
                     '</div>' + 
@@ -138,17 +138,19 @@ function createListVolcanoes() {
 } // Формирование списка вулканов
 
 function sendResult() {
-    jsonStr = JSON.stringify(selectedVolcanoes);
-} // Передача массива с вулканами на следующую страницу
+    serializeSelectedVolcanoes = JSON.stringify(selectedVolcanoes);
+    serializeSelectedSigns = sessionStorage.getItem("serializeSelectedSigns");
+    taskId = sessionStorage.getItem("taskId");
+} // 
 
-function offElemForCatalog() {
+function onElemForCatalog() {
     var referrer = document.referrer;
-    if (referrer == "http://localhost:8000/") {
-        $("#groupBtnSelectVolcanoes").css('display','none');
-        $("#btn-next").css('display','none');
+    if (referrer == "/signs") {
+        $("#groupBtnSelectVolcanoes").removeClass("hidden");
+        $("#btn-next").removeClass("hidden");
     }
-} // Отключение элементов перехода для каталога вулканов
+} // Включение элементов перехода на странице вулканов при решении задачи
 
 createListVolcanoes();
 
-offElemForCatalog();
+onElemForCatalog();

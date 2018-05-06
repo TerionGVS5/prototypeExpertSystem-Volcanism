@@ -57,8 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\app\scripts\processSigns.js" />
+    <Content Include="app\static\app\scripts\processTasks.js" />
     <Content Include="app\templates\app\selectvolcano.html" />
     <Content Include="app\templates\app\signs.html" />
+    <Content Include="app\templates\app\tasks.html" />
     <Content Include="app\templates\app\volcano_update_form.html" />
     <Content Include="app\templates\app\addgroupvolcano.html" />
     <Content Include="app\templates\app\addvolcano.html" />

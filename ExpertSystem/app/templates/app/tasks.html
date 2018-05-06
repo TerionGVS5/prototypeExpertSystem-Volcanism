@@ -1,0 +1,32 @@
+﻿{% extends "app/layout.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    <script src="{% static 'app/scripts/processTasks.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="text-center page-header">Добро пожаловать на стартовую страницу решения задач
+                    <br/><small>Перед началом работы ознакомьтесь с кратким руководством и списком задач</small></h2>
+            </div>
+        </div>
+        <div class="row row-flex">
+            <div class="col-xs-6">
+                <h4 class="text-center">Краткое руководство</h4>
+                <p></p>
+            </div>
+            <div class="col-xs-2"></div>
+            <div class="col-xs-4">
+                <h4 class="text-center">Список решаемых задач</h4>
+                <ul class="list-group">
+                    <li id="1" class="green list-group-item margin2px" onclick="sendResultAndPageSigns('1')">Метод односвязного графа</li>
+                    <li id="2" class="green list-group-item margin2px" onclick="sendResultAndPageSigns('2')">Метод масок</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

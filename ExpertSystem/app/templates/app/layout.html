@@ -23,17 +23,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="#">Общие сведения об ЭС</a></li>
+                    <li><a href="{% url 'Maps' %}">Каталог вулканов Камчатки</a></li>
+                    <li><a href="#">Редактирование ЭС</a></li>
+                    <li><a href="{% url 'Tasks' %}">Выбор и решение задач</a></li>
+
+                    <!--<li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'about' %}">About</a></li>
                     <li><a href="{% url 'contact' %}">Contact</a></li>
                     <li><a href="{% url 'addsign' %}">Add sign</a></li>
                     <li><a href="{% url 'addvalue' %}">Add value</a></li>
                     <li><a href="{% url 'addvolcano' %}">Add volcano</a></li>
                     <li><a href="{% url 'addgroupvolcano' %}">Add group volcano</a></li>
-                    <li><a href="{% url 'selectvolcano' %}">Select volcano</a></li>
+                    <li><a href="{% url 'selectvolcano' %}">Select volcano</a></li>-->
                     
                 </ul>
-                {% include 'app/loginpartial.html' %}
+                <!--{% include 'app/loginpartial.html' %}-->
             </div>
         </div>
     </div>

@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^$', app.views.home, name='home'),
     url(r'^maps$', app.views.maps, name='Maps'),
     url(r'^signs$', app.views.signs, name='Signs'),
+    url(r'^tasks$', app.views.tasks, name='Tasks'),
     url(r'^filldb$', app.views.fillDB, name='filldb'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^get_info_volcano/$', app.views.getInfoVolcano, name='get_info_volcano'),

@@ -11,7 +11,6 @@ function selectVolcanoe(objectId, special) {
             objectManager.objects.setObjectOptions(objectId, {
                 preset: 'islands#yellowDotIcon'
             });
-            //console.log(selectedVolcanoes);
             return 0;
         }
     }
@@ -25,7 +24,6 @@ function selectVolcanoe(objectId, special) {
             objectManager.objects.setObjectOptions(objectId, {
                 preset: 'islands#greenDotIcon'
             });
-            //console.log(selectedVolcanoes);
             return 0;
         }
     }
