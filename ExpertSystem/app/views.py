@@ -349,5 +349,193 @@ def getInfoSign(request):
         for sign in signs:
             data[group.name].append({sign.name:sign.number})
     data_json = json.dumps(data, cls=DjangoJSONEncoder)
-
     return HttpResponse(data_json, content_type='application/json')
+
+def masks(request):
+    array_volcano_id = json.loads(request.GET.get('array_volcano_id'))
+    array_sign_id = json.loads(request.GET.get('array_sign_id'))
+
+    T = [[int(i)] for i in array_volcano_id]
+
+    for sign_id in array_sign_id:
+        for el in T:
+            el.append(int(Value.objects.get(volcano = el[0], sign = sign_id).value))
+    print(T)
+
+    def MaskMethod(T) :
+	    ##T - матриа признаков, которая поступает на вход, первый столбец матрицы - это айдишники вулканов из БД 
+	    #T = [  #ID X1  X2  X3  X4  X5  X6  X7  X8  X9  X10 X11 X12
+	    #	 [ 1,  1,  1,  1,  1], #A1
+	    #	 [ 2,  0,  0,  0,  0], #A2
+	    #	 [ 3,  1,  0,  1,  0], #A3
+	    #	 [ 4,  1,  1,  1,  1], #A4 
+	    #	 ]
+
+        m = 0 #Количество строк
+        for i in T :
+            m += 1 
+
+        n = 0 #Количество колонок 
+        for i in T[0] :
+            n += 1
+        n -= 1
+
+        Table = [["null"] * (n+1) for i in range(m+1)]  
+
+        for i in range(1,n+1) :
+            Table[0][i] = "X"+str(i)
+
+        for i in range(1,m+1) :
+            Table[i][0] = "A"+str(i)
+
+        for i in range(1, m+1) :
+            for j in range(1, n+1) :
+                Table[i][j] = T[i-1][j]
+
+        R1 = round((n / 2) + (n / 4)) #Порог различимости 
+        R2 = round((n / 2) + (n / 4)) #Порог сходства 
+
+        MAT = [[0] * (n+1) for i in range(m)]
+        MATprev = []
+        for i in range(n) :
+            MATprev.append(0)
+        MATtmp = []
+        for i in range(n) :
+            MATtmp.append(0)
+        differenceR1 = 0
+        differenceR2 = 0 
+
+        for i in range(n) : 
+            MAT[0][i]=T[0][i+1]
+            MATprev[i]=T[0][i+1]
+
+        MAT[0][n]=1
+
+        for i in range(1,m):
+            for k in range(m-1):
+                for g in range (n):
+                    if MAT[k][g] != T[i][g+1] :
+                        differenceR2+=1;
+                if differenceR2 < R2 :
+                    break
+            for j in range(n) :
+                if T[i][j+1] != MATprev[j] :
+                    differenceR1+=1
+                MATtmp[j]=T[i][j+1]
+            if differenceR1 >= R1 and differenceR2 >= R2 : 
+                for j in range(n) :
+                    MAT[i][j]= MATtmp[j]
+                    MATprev[j]= MATtmp[j]
+                MAT[i][n] = 1
+            MATtmp = []
+            for i in range(n) :
+                MATtmp.append(0)
+            differenceR2=0
+            differenceR1=0
+
+        for elem in Table :
+            elem.append("null")
+        len(Table[0])
+        Table[0][len(Table[0])-1] = 'M'
+
+
+        j = 1
+        for i in range(1,m):
+            if (MAT[i-1][n] == 1) :
+                Table[i][len(Table[0])-1] = 'M'+str(j)
+                j += 1
+
+        j = 1
+        for i in range(m-1) :
+            if (MAT[i][n] == 1) :
+                if (j==1) :
+                    codesBegin = len(Table[0])
+                for elem in Table :
+                    elem.append("null")
+                Table[0][len(Table[0])-1] = 'M'+ str(j)
+                j += 1
+        codesEnd = len(Table[0])-1 
+
+        k = 0
+        for i in range(m-1) :
+            if MAT[i][n] == 1 :
+                for g in range (m) :
+                    for j in range (n) :
+                        if T[g][j+1] == MAT[i][j] : 
+                            differenceR2 += 1
+                    if differenceR2 >= R2 :
+                        Table[g+1][codesBegin+k] = '1'
+                    else :
+                        Table[g+1][codesBegin+k] = '0'
+                    differenceR2 = 0
+                k += 1
+
+        i = 0
+        Clusters = [["null"] * (2) for i in range(m+1)]
+        tmpCluster = ""
+        for i in range(1,m+1) :
+            for j in range(codesBegin, codesEnd+1) :
+                tmpCluster = tmpCluster + Table[i][j]
+            Clusters[i-1][0] =tmpCluster #Значение
+            Clusters[i-1][1] = i         #Номер
+            tmpCluster = ""
+
+        tmpCluster1 = []
+        for i in range(2) :
+            tmpCluster1.append("null")
+        for j in range(m-1) :
+            for i in range(m-j-1) : 
+                if (Clusters[i][0] > Clusters[i+1][0]) : 
+                    tmpCluster1[0] = Clusters[i][0]
+                    tmpCluster1[1] = Clusters[i][1]
+                    Clusters[i][0] = Clusters[i+1][0]
+                    Clusters[i][1] = Clusters[i+1][1]
+                    Clusters[i+1][0] =  tmpCluster1[0]
+                    Clusters[i+1][1] =  tmpCluster1[1]
+
+
+        l =0
+        Res = ""
+        for i in range(m+1) :
+            if (Clusters[i-1][0] != Clusters[i][0]) and Clusters[i][0] != "null" :
+                if i>=1 :
+                    Res = Res + " "
+                l += 1
+            if Clusters[i][1] != "null" :
+                Res =  Res + 'a' + str(Clusters[i][1])
+        if l==0 :
+            l = 1
+
+        a = Res.split(" ")  
+
+
+        ResReal = []
+        newstr = ""
+        i = 0
+        for elem in a :
+            ResReal.append([])
+            for symb in elem :
+                if symb != "a" :
+                    newstr = newstr + symb
+                else :
+                    if newstr != "" :
+                        ResReal[i].append(int(newstr))
+                        newstr = ""
+            if newstr != "" :
+                ResReal[i].append(int(newstr))
+                newstr = ""
+            i += 1
+
+
+
+        i = 0
+        ResultatTuTBudet = []
+        for elem in ResReal :
+            ResultatTuTBudet.append([])
+            for number in elem :
+                ResultatTuTBudet[i].append(T[number-1][0])
+            i += 1
+        return ResultatTuTBudet 
+    data = MaskMethod(T)
+    json_data=json.dumps(data, cls=DjangoJSONEncoder)
+    return HttpResponse(json_data, content_type='application/json')
