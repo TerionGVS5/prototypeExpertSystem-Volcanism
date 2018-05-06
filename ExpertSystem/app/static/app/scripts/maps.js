@@ -30,7 +30,6 @@ function selectVolcanoe(objectId, special) {
         }
     }
 
-
 } // Функция изменяет цвет метки на карте, цвет фона элемента списка и добавляет id вулкана в массив
 
 var myMap;

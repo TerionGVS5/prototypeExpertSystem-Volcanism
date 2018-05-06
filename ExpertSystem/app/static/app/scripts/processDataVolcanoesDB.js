@@ -114,9 +114,9 @@ function createListVolcanoes() {
                     '<div class="row row-flex padding-bottom5px">' +
                         '<div class="col-xs-12 text-center">' + 
                             '<div id="groupBtnSelectVolcanoes" class="btn-group btn-group-justified padding-bottom5px">' +
-                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectAllVolcanoes()">Все</a>' +
-                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectActiveVolcanoes()">Действующие</a>' +
-                                '<a href="#" class="btn btn-primary" style="margin-right: 5px" onclick="selectInactiveVolcanoes()">Потухшие</a>' +
+                                '<a href="#" class="btn btn-primary" onclick="selectAllVolcanoes()">Все</a>' +
+                                '<a href="#" class="btn btn-primary" onclick="selectActiveVolcanoes()">Действующие</a>' +
+                                '<a href="#" class="btn btn-primary" onclick="selectInactiveVolcanoes()">Потухшие</a>' +
                             '</div>' +
                         '</div>' +
                     '</div>' + 

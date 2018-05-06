@@ -349,4 +349,5 @@ def getInfoSign(request):
         for sign in signs:
             data[group.name].append({sign.name:sign.number})
     data_json = json.dumps(data, cls=DjangoJSONEncoder)
+
     return HttpResponse(data_json, content_type='application/json')
