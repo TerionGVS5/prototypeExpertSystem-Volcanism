@@ -7,7 +7,21 @@
 
 {% block content %}
     <div class="container">
-        
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="text-center page-header">Общие сведения об экспертной системе
+                    <br/><small>Раздел содержит общую информацию о предметной области, решаемых задачах и методики работы с экспертной системой</small></h2>
+            </div>
+            <div class="row row-flex">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8">
+                    <a href="{% url 'Subject Area' %}" class="text-center list-group-item margin2px">Предметная область</a>
+                    <a href="{% url 'Info about tasks' %}" class="text-center list-group-item margin2px">Решаемые задачи</a>
+                    <a href="{% url 'User guide' %}" class="text-center list-group-item margin2px">Методика работы с ЭС</a>
+                </div>
+                <div class="col-xs-2"></div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

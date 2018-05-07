@@ -4,7 +4,10 @@
 
 <div class="jumbotron">
     <h1>Экспертная система (Вулканизм)</h1>
-    <p class="lead">Описание экспертной системы...</p>
+    <p class="lead">Данная экспертная система предназначена для геологов, занимающихся вулканизмом. 
+                    В ней представлены вулканы Камчатского края, распределённые по группам 
+                    и располагающие рядом признаков. Основными задачами системы являются выделение и 
+                    распознавание формаций.</p>
 </div>
 
 <div class="row">
@@ -13,24 +16,24 @@
         <p>
             Раздел содержит общую информацию о предметной области, решаемых задачах и методики работы с экспертной системой.
         </p>
-        <p><a class="btn btn-default" href="/subjectarea">Предметная область &raquo;</a></p>
-        <p><a class="btn btn-default" href="/infotasks">Решаемые задачи &raquo;</a></p>
-        <p><a class="btn btn-default" href="/userguide">Методика работы с ЭС &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'Subject Area' %}">Предметная область &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'Info about tasks' %}">Решаемые задачи &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'User guide' %}">Методика работы с ЭС &raquo;</a></p>
     </div>
     <div class="col-md-3">
         <h3>Каталог вулканов Камчатки</h3>
         <p>Перейдите по ссылке ниже, чтобы получить информацию о вулканах Камчатки.</p>
-        <p><a class="btn btn-default" href="/maps">Каталог вулканов Камчатки &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'Maps' %}">Каталог вулканов Камчатки &raquo;</a></p>
     </div>
     <div class="col-md-3">
         <h3>Редактор экспертной системы</h3>
         <p>В этом разделе можно внести или изменить данные.</p>
-        <p><a class="btn btn-default" href="/editdata">Редактирование ЭС &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'Edit data ES' %}">Редактирование ЭС &raquo;</a></p>
     </div>
      <div class="col-md-3">
         <h3>Выбор и решение задач</h3>
         <p>Перейдите по ссылке ниже для выбора необходимой задачи и получения ее решения.</p>
-        <p><a class="btn btn-default" href="/tasks">Выбор и решение задач &raquo;</a></p>
+        <p><a class="btn btn-default" href="{% url 'Tasks' %}">Выбор и решение задач &raquo;</a></p>
     </div>
 </div>
 

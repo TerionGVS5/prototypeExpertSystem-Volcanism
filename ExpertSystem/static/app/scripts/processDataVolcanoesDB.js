@@ -110,7 +110,7 @@ function selectInactiveVolcanoes() {
 function createListVolcanoes() {
     $("#list-volcanoes").html(function() {
         var content = "";
-        content += '<h4 class="margin-top-off margin-bottom-off padding-bottom5px">Выберите необходимые вулканы из списка и/или по группам:</h4>' +
+        content += '' +
                     '<div class="row row-flex padding-bottom5px">' +
                         '<div class="col-xs-12 text-center">' + 
                             '<div id="groupBtnSelectVolcanoes" class="btn-group btn-group-justified padding-bottom5px hidden">' +
@@ -138,16 +138,66 @@ function createListVolcanoes() {
 } // Формирование списка вулканов
 
 function sendResult() {
-    serializeSelectedVolcanoes = JSON.stringify(selectedVolcanoes);
-    serializeSelectedSigns = sessionStorage.getItem("serializeSelectedSigns");
+    //serializeSelectedVolcanoes = JSON.stringify(selectedVolcanoes);
+    //serializeSelectedSigns = sessionStorage.getItem("serializeSelectedSigns");
+    selectedSigns = JSON.parse(sessionStorage.getItem("serializeSelectedSigns"));
     taskId = sessionStorage.getItem("taskId");
-} // 
+    l_count = $("#l_count").val();
+    if (selectedVolcanoes.length != 0) {
+        switch (taskId) {
+            case '1':
+                if ((selectedVolcanoes.length >= l_count) && (l_count >= 0)) {
+                    //location.href = '/onegraph/?l_count='+l_count+'&array_sign_id=['+selectedSigns+']&array_volcano_id=['+selectedVolcanoes+']';
+                    $.get("/onegraph/", { l_count: l_count, array_sign_id: '[' + selectedSigns + ']', array_volcano_id: '[' + selectedVolcanoes + ']' })
+                        .done(function (data) {
+                            console.log(data);
+                        })
+                        .fail(function () {
+                            alert("Ошибка при выполнении операции. Попробуйте повторить запрос");
+                        });
+                } else {
+                    alert("Число кластеров не должно быть отрицательным или превышать выбранное количество вулканов");
+                }
+                break;
+            case '2':
+                $.get("/masks/", { array_volcano_id: '[' + selectedVolcanoes + ']', array_sign_id: '[' + selectedSigns + ']' })
+                    .done(function (data) {
+                        console.log(data);
+                    })
+                    .fail(function () {
+                        alert("Ошибка при выполнении операции. Попробуйте повторить запрос");
+                    });
+                break;
+            default:
+                alert("Данный метод не реализован");
+                break;
+        } 
+    } else {
+        alert("Необходимо выбрать как минимум один вулкан");
+    }
+} // Передача значений заранее выбранному методу и получение результата
 
 function onElemForCatalog() {
     var referrer = document.referrer;
-    if (referrer == "/signs") {
+    if (referrer.indexOf("/signs") != -1) {
+        $("#header-maps").html(function () {
+            var content = "";
+            content = '<h4 class=" page-header">Выберите необходимые вулканы из списка и/или по группам' +
+                'и укажите количество кластеров, не превышающее число, выбранных вулканов</h4 >'
+            return content;
+        });
         $("#groupBtnSelectVolcanoes").removeClass("hidden");
         $("#btn-next").removeClass("hidden");
+        taskId = sessionStorage.getItem("taskId");
+        if (taskId == 1) {
+            $("#l-count").removeClass("hidden");
+        }
+    } else {
+        $("#header-maps").html(function () {
+            var content = "";
+            content = '<h2 class=" page-header">Каталог вулканов Камчатки</h2>'
+            return content;
+        });
     }
 } // Включение элементов перехода на странице вулканов при решении задачи
 

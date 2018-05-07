@@ -7,7 +7,23 @@
 
 {% block content %}
     <div class="container">
-        
+        <div class="row">
+            <div class="col-xs-12">
+                <h2 class="text-center page-header">Страница добавления и редактирования данных
+                    <br/><small>Для добавления или редактиования данных выберите соответствующий пункт меню</small></h2>
+            </div>
+            <div class="row row-flex">
+                <div class="col-xs-2"></div>
+                <div class="col-xs-8">
+                    <a href="{% url 'addsign' %}" class="text-center list-group-item margin2px">Добавление признака</a>
+                    <a href="{% url 'addvalue' %}" class="text-center list-group-item margin2px">Добавление значения</a>
+                    <a href="{% url 'addvolcano' %}" class="text-center list-group-item margin2px">Добавление вулкана</a>
+                    <a href="{% url 'addgroupvolcano' %}" class="text-center list-group-item margin2px">Добавление группы вулканов</a>
+                    <a href="{% url 'selectvolcano' %}" class="text-center list-group-item margin2px">Изменение данных о вулкане</a>
+                </div>
+                <div class="col-xs-2"></div>
+            </div>
+        </div>
     </div>
 
 {% endblock %}

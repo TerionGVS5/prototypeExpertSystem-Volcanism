@@ -150,7 +150,13 @@ function selectSign(signId, numberGroup, special) {
 function sendResultAndPageMaps() {
     serializeSelectedSigns = JSON.stringify(selectedSigns);
     sessionStorage.setItem('serializeSelectedSigns', serializeSelectedSigns);
-    location.href = '/maps';
+    console.log(selectedSigns);
+    if (selectedSigns.length != 0) {
+        location.href = '/maps';
+    } else {
+        alert("Необходимо выбрать как минимум один признак");
+    }
+    
 } // Передача json объекта через сессионное хранилище и переход на страницу выбора вулканов
 
 document.body.addEventListener("click", function (event) {
