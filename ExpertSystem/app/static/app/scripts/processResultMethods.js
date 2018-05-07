@@ -5,6 +5,8 @@ function createResult(headerName, arrClusters) {
     $("#result-method").html(function () {
         var content = "";
         content += '<h2 class="text-center page-header">' + headerName + '</h2>' +
+            '<p>Среди выбранных вулканов выделено ' + arrClusters.length +
+                   ' кластер(-а, -ов). Вулканы, включенные в кластер, имеют внутреннюю схожесть по выбранным атрибутам.</p>' +
                    '<ul class="list-group">';
         for (cluster in arrClusters) {
             content += '<li class="list-group-item margin2px">Кластер ' + (parseInt(cluster, 10)+1) + '</li>' +
