@@ -27,7 +27,7 @@ def home(request):
         request,
         'app/index.html',
         {
-            'title':'Home Page',
+            'title':'Главная страница',
             'year':datetime.now().year,
         }
     )
@@ -41,9 +41,9 @@ def maps(request):
         request,
         'app/maps.html',
         {
-            'title':'Maps',
+            'title':'Карта вулканов',
             'volcanoesJsonFullInfo':volcanoesJsonFullInfo,
-            'message':'Your contact page.',
+            'message':'Карта вулканов.',
             'year':datetime.now().year,
         }
     )
@@ -56,8 +56,8 @@ def signs(request):
         request,
         'app/signs.html',
         {
-            'title':'Signs',
-            'message':'Your contact page.',
+            'title':'Выбор признаков',
+            'message':'Страница выбора признаков.',
             'year':datetime.now().year,
         }
     )
@@ -70,8 +70,78 @@ def tasks(request):
         request,
         'app/tasks.html',
         {
-            'title':'Tasks',
-            'message':'Your contact page.',
+            'title':'Решение задач',
+            'message':'Страница выбора задач.',
+            'year':datetime.now().year,
+        }
+    )
+
+def subjectarea(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/subjectarea.html',
+        {
+            'title':'Предметная область',
+            'message':'Описание предметной области.',
+            'year':datetime.now().year,
+        }
+    )
+
+def infotasks(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/infotasks.html',
+        {
+            'title':'Решаемые задачи',
+            'message':'Информация о задачах, решаемых ЭС.',
+            'year':datetime.now().year,
+        }
+    )
+
+def userguide(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/userguide.html',
+        {
+            'title':'Методика работы с ЭС',
+            'message':'Полное руководство по использованию ЭС.',
+            'year':datetime.now().year,
+        }
+    )
+
+def editdata(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/editdata.html',
+        {
+            'title':'Редактировние ЭС',
+            'message':'В этом разделе можно внести или изменить данные.',
+            'year':datetime.now().year,
+        }
+    )
+
+def generalinfo(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/generalinfo.html',
+        {
+            'title':'Общие сведения',
+            'message':'Раздел содержит общую информацию о предметной области, решаемых задачах и методики работы с экспертной системой.',
             'year':datetime.now().year,
         }
     )
