@@ -160,3 +160,14 @@ m-r-5px {
     margin-left: auto;
     margin-right: auto;
 } /*Доступен в Bootstrap с версии 3.0.1*/
+
+.dl-horizontal-widthX2-dt dt {
+    /*float: left;
+    width: 220px;
+    overflow: scroll;
+    clear: left;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 20px;*/
+}

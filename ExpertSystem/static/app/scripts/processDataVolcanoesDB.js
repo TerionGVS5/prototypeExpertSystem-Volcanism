@@ -148,8 +148,8 @@ function sendResult() {
                     $.get("/onegraph/", { l_count: l_count, array_sign_id: '[' + selectedSigns + ']', array_volcano_id: '[' + selectedVolcanoes + ']' })
                         .done(function (data) {
                             serializeArrClustersOnegraph = JSON.stringify(data);
-                            sessionStorage('arrClustersOneGraph', serializeArrClustersOnegraph);
-                            location.href = '/resultmethodonegraph';
+                            sessionStorage.setItem('arrClustersOneGraph', serializeArrClustersOnegraph);
+                            location.href = '/resultmethod';
                         })
                         .fail(function () {
                             alert("Ошибка при выполнении операции. Попробуйте повторить запрос");
@@ -162,8 +162,8 @@ function sendResult() {
                 $.get("/masks/", { array_volcano_id: '[' + selectedVolcanoes + ']', array_sign_id: '[' + selectedSigns + ']' })
                     .done(function (data) {
                         serializeArrClustersMasks = JSON.stringify(data);
-                        sessionStorage('arrClustersMasks', serializeArrClustersMasks);
-                        location.href = '/resultmethodmasks';                  
+                        sessionStorage.setItem('arrClustersMasks', serializeArrClustersMasks);
+                        location.href = '/resultmethod';                  
                     })
                     .fail(function () {
                         alert("Ошибка при выполнении операции. Попробуйте повторить запрос");
