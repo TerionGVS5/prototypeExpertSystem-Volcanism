@@ -425,7 +425,7 @@ def onegraph(request):
     new_sets = copy.deepcopy(sets)
     for i in range(0,len(sets)):
         for j in range(0,len(sets[i])):
-            new_sets[i][j] = who_is_who[sets[i][j]-1]
+            new_sets[i][j] = Volcano.objects.get(pk=who_is_who[sets[i][j]-1]).name
     json_data=json.dumps(new_sets, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type='application/json')
 
@@ -635,5 +635,9 @@ def masks(request):
             i += 1
         return ResultatTuTBudet 
     data = MaskMethod(T)
-    json_data=json.dumps(data, cls=DjangoJSONEncoder)
+    new_sets = copy.deepcopy(data)
+    for i in range(0,len(data)):
+        for j in range(0,len(data[i])):
+            new_sets[i][j] = Volcano.objects.get(pk=data[i][j]).name
+    json_data=json.dumps(new_sets, cls=DjangoJSONEncoder)
     return HttpResponse(json_data, content_type='application/json')
