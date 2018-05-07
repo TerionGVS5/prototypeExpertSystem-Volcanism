@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^infotasks$', app.views.infotasks, name='Info about tasks'),
     url(r'^userguide$', app.views.userguide, name='User guide'),
     url(r'^editdata$', app.views.editdata, name='Edit data ES'),
+    url(r'^resultmethod$', app.views.resultmethod, name='Result method'),
     url(r'^filldb$', app.views.fillDB, name='filldb'),
     url(r'^contact$', app.views.contact, name='contact'),
     url(r'^get_info_volcano/$', app.views.getInfoVolcano, name='get_info_volcano'),

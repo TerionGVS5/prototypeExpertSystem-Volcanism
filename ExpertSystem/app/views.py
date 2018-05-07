@@ -146,6 +146,20 @@ def generalinfo(request):
         }
     )
 
+def resultmethod(request):
+    """Renders the contact page."""
+    assert isinstance(request, HttpRequest)
+
+    return render(
+        request,
+        'app/resultMethod.html',
+        {
+            'title':'Результат работы метода',
+            'message':'',
+            'year':datetime.now().year,
+        }
+    )
+
 def contact(request):
     """Renders the contact page."""
     assert isinstance(request, HttpRequest)

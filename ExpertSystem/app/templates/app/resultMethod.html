@@ -1,0 +1,15 @@
+﻿{% extends "app/layout.html" %}
+{% load staticfiles %}
+
+{% block scripts %}
+    <script src="{% static 'app/scripts/processResultMethods.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row-flex row-flex">
+            <div id="result-method" class="col-xs-12"></div>
+        </div>
+    </div>
+
+{% endblock %}

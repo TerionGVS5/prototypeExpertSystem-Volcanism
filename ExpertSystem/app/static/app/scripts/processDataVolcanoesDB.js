@@ -138,8 +138,6 @@ function createListVolcanoes() {
 } // Формирование списка вулканов
 
 function sendResult() {
-    //serializeSelectedVolcanoes = JSON.stringify(selectedVolcanoes);
-    //serializeSelectedSigns = sessionStorage.getItem("serializeSelectedSigns");
     selectedSigns = JSON.parse(sessionStorage.getItem("serializeSelectedSigns"));
     taskId = sessionStorage.getItem("taskId");
     l_count = $("#l_count").val();
@@ -147,10 +145,11 @@ function sendResult() {
         switch (taskId) {
             case '1':
                 if ((selectedVolcanoes.length >= l_count) && (l_count >= 0)) {
-                    //location.href = '/onegraph/?l_count='+l_count+'&array_sign_id=['+selectedSigns+']&array_volcano_id=['+selectedVolcanoes+']';
                     $.get("/onegraph/", { l_count: l_count, array_sign_id: '[' + selectedSigns + ']', array_volcano_id: '[' + selectedVolcanoes + ']' })
                         .done(function (data) {
-                            console.log(data);
+                            serializeArrClustersOnegraph = JSON.stringify(data);
+                            sessionStorage.setItem('arrClustersOneGraph', serializeArrClustersOnegraph);
+                            location.href = '/resultmethod';
                         })
                         .fail(function () {
                             alert("Ошибка при выполнении операции. Попробуйте повторить запрос");
@@ -162,7 +161,9 @@ function sendResult() {
             case '2':
                 $.get("/masks/", { array_volcano_id: '[' + selectedVolcanoes + ']', array_sign_id: '[' + selectedSigns + ']' })
                     .done(function (data) {
-                        console.log(data);
+                        serializeArrClustersMasks = JSON.stringify(data);
+                        sessionStorage.setItem('arrClustersMasks', serializeArrClustersMasks);
+                        location.href = '/resultmethod';                  
                     })
                     .fail(function () {
                         alert("Ошибка при выполнении операции. Попробуйте повторить запрос");
@@ -175,7 +176,7 @@ function sendResult() {
     } else {
         alert("Необходимо выбрать как минимум один вулкан");
     }
-} // Передача значений заранее выбранному методу и получение результата
+} // Передача значений заранее выбранному методу, сохранение полученного результата и переход на страницу с результатом работы метода
 
 function onElemForCatalog() {
     var referrer = document.referrer;
@@ -199,7 +200,8 @@ function onElemForCatalog() {
             return content;
         });
     }
-} // Включение элементов перехода на странице вулканов при решении задачи
+} /* Включение элементов перехода на странице вулканов при решении задачи, подстановка необходимого заголовка, 
+                                  включение ввода значения l_count для метода односвязного графа */
 
 createListVolcanoes();
 

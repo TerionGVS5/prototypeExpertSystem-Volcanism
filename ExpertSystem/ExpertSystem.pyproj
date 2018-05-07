@@ -56,11 +56,13 @@
     <Folder Include="ExpertSystem\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\static\app\scripts\processResultMethods.js" />
     <Content Include="app\static\app\scripts\processSigns.js" />
     <Content Include="app\static\app\scripts\processTasks.js" />
     <Content Include="app\templates\app\editdata.html" />
     <Content Include="app\templates\app\generalinfo.html" />
     <Content Include="app\templates\app\infotasks.html" />
+    <Content Include="app\templates\app\resultMethod.html" />
     <Content Include="app\templates\app\selectvolcano.html" />
     <Content Include="app\templates\app\signs.html" />
     <Content Include="app\templates\app\subjectarea.html" />
